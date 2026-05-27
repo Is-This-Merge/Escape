@@ -66,3 +66,12 @@ h2{
     font-size: 14px;
     color: #ecf0f1;
 }
+
+.footer {
+    margin: 0;
+    padding: 20px;
+    font-size: 0.8em;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}   
