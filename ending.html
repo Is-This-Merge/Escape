@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE ESCAPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hd">
+    <div class="hd-top">
+      <div class="hd-title">THE ESCAPE</div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="input-card">
+    <div class="field">
+      <span class="field-label">닉네임</span>
+      <input class="field-input" id="inp-nick" type="text" placeholder="ex) 김사사" maxlength="12">
+    </div>
+    <div class="field">
+      <span class="field-label">기록 시간</span>
+      <div class="time-row">
+        <input class="field-input" id="inp-min" type="number" placeholder="분" min="0" max="99" style="text-align:center;">
+        <span style="display:flex;align-items:center;font-size:20px;color:#ccc;font-weight:300;">:</span>
+        <input class="field-input" id="inp-sec" type="number" placeholder="초" min="0" max="59" style="text-align:center;">
+      </div>
+      <div class="time-hint">분(0–99) : 초(0–59)</div>
+    </div>
+    <button class="btn-add" onclick="addRecord()">기록 추가</button>
+  </div>
+
+  <!-- List -->
+  <div class="sec-label">
+    <span class="sec-label-text">전체 기록</span>
+    <div class="sec-label-line"></div>
+    <span class="sec-count" id="rec-count">0명</span>
+  </div>
+  <div class="records" id="records-list"></div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY = 'btc_v2_records';
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; }
+}
+function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+
+function pad(n) { return String(n).padStart(2,'0'); }
+function msToStr(ms) {
+  const m = Math.floor(ms/60000);
+  const s = Math.floor((ms%60000)/1000);
+  return pad(m)+':'+pad(s);
+}
+function today() {
+  return new Date().toLocaleDateString('ko-KR',{month:'short',day:'numeric'});
+}
+
+function addRecord() {
+  const nick = document.getElementById('inp-nick').value.trim();
+  const minRaw = document.getElementById('inp-min').value;
+  const secRaw = document.getElementById('inp-sec').value;
+
+  if (!nick) { shake('inp-nick'); toast('닉네임을 입력해주세요!'); return; }
+  if (minRaw === '' && secRaw === '') { shake('inp-min'); toast('기록 시간을 입력해주세요!'); return; }
+
+  const m = parseInt(minRaw)||0;
+  const s = parseInt(secRaw)||0;
+
+  if (s < 0 || s > 59) { shake('inp-sec'); toast('초는 0~59 사이로 입력해주세요!'); return; }
+  if (m === 0 && s === 0) { shake('inp-min'); toast('0:00은 등록할 수 없어요!'); return; }
+
+  const ms = (m*60+s)*1000;
+  const rec = { id: Date.now(), nick, ms, date: today() };
+  const data = load();
+  data.push(rec);
+  save(data);
+
+  document.getElementById('inp-nick').value = '';
+  document.getElementById('inp-min').value = '';
+  document.getElementById('inp-sec').value = '';
+
+  toast('축하합니다! 🎉');
+  render();
+}
+
+function deleteRec(id) {
+  save(load().filter(r => r.id !== id));
+  render();
+}
+
+function render() {
+  const data = load().sort((a,b) => a.ms - b.ms);
+  const list = document.getElementById('records-list');
+  document.getElementById('rec-count').textContent = data.length + '명';
+
+  if (!data.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">🔐</div><div class="empty-txt">아직 기록이 없어요</div></div>`;
+    return;
+  }
+
+  const medals = ['🥇','🥈','🥉'];
+  const rClass = ['r1','r2','r3'];
+
+  list.innerHTML = data.map((r, i) => {
+    const rc = rClass[i] || '';
+    const rankLabel = i < 3 ? medals[i] : `#${i+1}`;
+    return `
+    <div class="rec-card ${rc}">
+      <div class="rec-rank ${rc}">${rankLabel}</div>
+      <div class="rec-info">
+        <div class="rec-nick">${esc(r.nick)}</div>
+        <div class="rec-date">${r.date}</div>
+      </div>
+      <div class="rec-time">${msToStr(r.ms)}</div>
+      <button class="rec-del" onclick="deleteRec(${r.id})" title="삭제">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function shake(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('shake');
+  void el.offsetWidth;
+  el.classList.add('shake');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Tab to jump min→sec
+document.getElementById('inp-min').addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === 'Tab') {
+    e.preventDefault();
+    document.getElementById('inp-sec').focus();
+  }
+});
+document.getElementById('inp-sec').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addRecord();
+});
+
+render();
+</script>
+</body>
+</html>
