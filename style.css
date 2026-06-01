@@ -24,7 +24,7 @@ body {
     text-align: center;
 }
 
-/* ── 공통 레이아웃 및 폰트 요소 ── */
+/* ── 공통 레이아웃 요소 ── */
 .container {
     display: flex;
     flex-direction: column;
@@ -35,10 +35,25 @@ body {
     padding: 0;
 }
 
+/* 중앙 정렬용 추가 컨테이너가 있을 경우를 위한 대비 */
+.center_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
 .header {
     font-size: 2em;
     margin: 0;
     padding: 20px;
+}
+
+.center_container .header {
+    padding: 2em;
 }
 
 .content {
@@ -55,6 +70,7 @@ body {
     align-items: center;
 }
 
+/* ── 공통 타이포그래피 ── */
 h1 {
     font-size: 5rem;
 }
@@ -87,7 +103,7 @@ button:hover {
     color: var(--text-color);
 }
 
-/* ── 가이드 및 크레딧 (공통) ── */
+/* ── 가이드 및 크레딧 ── */
 .guide {
     margin-top: 50px;
     padding-top: 20px;
@@ -104,6 +120,7 @@ button:hover {
     color: var(--muted);
 }
 
+/* 하단 고정 시간 바 (업데이트 반영) */
 .time {
     margin: 0;
     padding: 0.5em;
@@ -112,7 +129,8 @@ button:hover {
     background-color: var(--primary-color);
     width: 100%;
     color: var(--text-color);
-    font-size: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 /* ── Ending 전용: 입력 카드 (Input Card) ── */
@@ -184,7 +202,7 @@ button:hover {
     margin-top: 5px;
 }
 
-/* Ending 전용 기록 추가 버튼 */
+/* 기록 추가 버튼 전용 */
 .btn-add {
     width: 100%;
     padding: 12px;
@@ -208,7 +226,7 @@ button:hover {
     transform: scale(0.98);
 }
 
-/* ── Ending 전용: 섹션 라벨 (Section label) ── */
+/* ── Ending 전용: 섹션 라벨 ── */
 .sec-label {
     display: flex;
     align-items: center;
@@ -235,7 +253,7 @@ button:hover {
     color: rgba(255, 255, 255, 0.3);
 }
 
-/* ── Ending 전용: 기록 카드 리스트 (Record cards) ── */
+/* ── Ending 전용: 기록 카드 리스트 ── */
 .records {
     display: flex;
     flex-direction: column;
@@ -326,16 +344,16 @@ button:hover {
     padding: 4px 2px;
     flex-shrink: 0;
     transition: color 0.15s;
-    margin-top: 0;    /* 공통 button의 margin 상쇄 */
-    margin-bottom: 0; /* 공통 button의 margin 상쇄 */
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .rec-del:hover {
     color: #e74c3c;
-    background: none; /* 공통 호버 배경색 제거 */
+    background: none;
 }
 
-/* ── Ending 전용: 빈 화면 상태 (Empty state) ── */
+/* ── Ending 전용: 빈 화면 상태 ── */
 .empty {
     text-align: center;
     padding: 48px 0 32px;
@@ -351,7 +369,7 @@ button:hover {
     font-size: 0.9em;
 }
 
-/* ── Ending 전용: 토스트 알림 (Toast) ── */
+/* ── Ending 전용: 토스트 알림 ── */
 .toast {
     position: fixed;
     bottom: 28px;
@@ -375,7 +393,7 @@ button:hover {
     transform: translateX(-50%) translateY(0);
 }
 
-/* ── 애니메이션 효과 (Animations) ── */
+/* ── 애니메이션 효과 ── */
 @keyframes popIn {
     from { opacity: 0; transform: translateY(-6px) scale(0.98); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
