@@ -1,0 +1,184 @@
+.container {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 2rem;
+}
+
+.header {
+    text-align: center;
+
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 800;
+
+    margin-bottom: 2rem;
+}
+
+.content {
+    flex: 1;
+
+    display: flex;
+    gap: 2rem;
+
+    max-width: 1200px;
+    width: 100%;
+
+    margin: 0 auto;
+}
+
+.input-card {
+    width: 340px;
+
+    background: rgba(255,255,255,.05);
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    border-radius: 20px;
+
+    padding: 1.5rem;
+}
+
+.records-container {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+.field {
+    margin-bottom: 1.25rem;
+}
+
+.field-label {
+    display: block;
+
+    margin-bottom: .5rem;
+
+    font-size: .85rem;
+    color: var(--muted);
+}
+
+.field-input {
+    width: 100%;
+
+    padding: .8rem 1rem;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    background: rgba(255,255,255,.05);
+
+    color: white;
+}
+
+.field-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.time-row {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.time-sep {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.btn-add {
+    width: 100%;
+
+    padding: 1rem;
+
+    border: none;
+    border-radius: 10px;
+
+    background: var(--primary-color);
+
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.1);
+}
+
+.records {
+    display: flex;
+    flex-direction: column;
+
+    gap: .75rem;
+
+    overflow-y: auto;
+}
+
+.rec-card {
+    display: flex;
+    align-items: center;
+
+    gap: 1rem;
+
+    padding: 1rem;
+
+    background: rgba(255,255,255,.05);
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+.rec-info {
+    flex: 1;
+}
+
+.rec-nick {
+    font-weight: 700;
+}
+
+.rec-date {
+    font-size: .8rem;
+    color: var(--muted);
+}
+
+.rec-time {
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.r1 {
+    border-left: 5px solid gold;
+}
+
+.r2 {
+    border-left: 5px solid silver;
+}
+
+.r3 {
+    border-left: 5px solid #cd7f32;
+}
+
+.footer {
+    text-align: center;
+
+    padding-top: 1.5rem;
+
+    color: var(--muted);
+
+    font-size: .85rem;
+}
+

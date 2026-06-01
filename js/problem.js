@@ -19,9 +19,11 @@ function loadProblem(id) {
     const problem = problems.find(p => p.id === id);
     if (problem) {
         problemElement.innerHTML = `
-            <h2>${problem.title}</h2>
-            <p>${problem.description}</p>
-            <button onclick="showHint(${problem.id})">힌트 보기</button>
+            <div class="card">
+                <h2>${problem.title}</h2>
+                <p>${problem.description}</p>
+                <button onclick="showHint(${problem.id})">힌트 보기</button>
+            </div>
         `;
     } else {
         problemElement.innerHTML = "<p>문제를 찾을 수 없습니다.</p>";
