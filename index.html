@@ -3,23 +3,26 @@
 <head>
     <title>THE ESCAPE</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="index.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
-    <div class="center_container">
-        <h1>The Escape</h1>
+    <div class="background-overlay"></div>
+
+    <div class="container">
+        <h1 id = "title">The Escape</h1>
 
         <p class="subtitle">
             Can you escape before it's too late?
         </p>
 
         <a href="playing.html">
-            <button>GAME START</button>
+            <button id = "start-button">GAME START</button>
         </a>
 
+        <p id="enter-text">Press ENTER to start</p>
+
         <a href="guide.html">
-            <button>How To Play</button>
+            <button id="guide-button">How To Play</button>
         </a>
 
         <div class="footer">
@@ -27,6 +30,8 @@
         </div>
 
     </div>
+
+    <script src="js/index.js"></script>
     
 </body>
 </html>
