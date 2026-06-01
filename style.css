@@ -148,4 +148,285 @@ body {
 }   
 
 
+<<<<<<< Updated upstream
 
+=======
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+.input-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 28px;
+}
+
+.field {
+    margin-bottom: 14px;
+}
+
+.field:last-child {
+    margin-bottom: 0;
+}
+
+.field-label {
+    display: block;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 6px;
+}
+
+.field-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.95em;
+    color: var(--text-color);
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.field-input:focus {
+    border-color: var(--primary-color);
+}
+
+.field-input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.time-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.time-row .field-input {
+    flex: 1;
+    text-align: center;
+}
+
+.time-sep {
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.time-hint {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 5px;
+}
+
+.btn-add {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.btn-add:hover {
+    background: var(--secondary-color);
+}
+
+.btn-add:active {
+    transform: scale(0.98);
+}
+
+/* ── Section label ── */
+
+.sec-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.sec-label-text {
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.sec-label-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.sec-count {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Record cards ── */
+
+.records {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rec-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.15s;
+    animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rec-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.rec-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.rec-card.r1::before { background: #f1c40f; }
+.rec-card.r2::before { background: #95a5a6; }
+.rec-card.r3::before { background: #e67e22; }
+
+.rec-rank {
+    font-size: 1.2em;
+    font-weight: 700;
+    min-width: 32px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.rec-rank.r1 { color: #f1c40f; }
+.rec-rank.r2 { color: #95a5a6; }
+.rec-rank.r3 { color: #e67e22; }
+
+.rec-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.rec-nick {
+    font-size: 0.95em;
+    font-weight: 600;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rec-date {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 2px;
+}
+
+.rec-time {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+.rec-card.r1 .rec-time {
+    color: #f1c40f;
+}
+
+.rec-del {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-size: 0.9em;
+    padding: 4px 2px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+}
+
+.rec-del:hover {
+    color: #e74c3c;
+}
+
+/* ── Empty state ── */
+
+.empty {
+    text-align: center;
+    padding: 48px 0 32px;
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.empty-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.empty-txt {
+    font-size: 0.9em;
+}
+
+/* ── Toast ── */
+
+.toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-color);
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 0.85em;
+    opacity: 0;
+    transition: all 0.25s;
+    pointer-events: none;
+    z-index: 99;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ── Animations ── */
+
+@keyframes popIn {
+    from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+}
+
+.shake {
+    animation: shake 0.35s ease;
+}
+>>>>>>> Stashed changes
