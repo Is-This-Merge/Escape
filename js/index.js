@@ -6,14 +6,16 @@ window.onload = function () {
     const title = document.getElementById("title");
     const startButton = document.getElementById("start-button");
     const guideButton = document.getElementById("guide-button");
-
+    const enterText = document.getElementById("enter-text");
     title.style.opacity = 0;
     startButton.style.opacity = 0;
     guideButton.style.opacity = 0;
+    enterText.style.opacity = 0;
 
     title.style.transition = "opacity 1s ease-in-out";
     startButton.style.transition = "opacity 1s ease-in-out";
     guideButton.style.transition = "opacity 1s ease-in-out";
+    enterText.style.transition = "opacity 1s ease-in-out";
 
     setTimeout(() => {
         title.style.opacity = 1;
@@ -25,6 +27,7 @@ window.onload = function () {
 
     setTimeout(() => {
         guideButton.style.opacity = 1;
+        enterText.style.opacity = 1;
     }, 1800);
 
     setInterval(() => {
