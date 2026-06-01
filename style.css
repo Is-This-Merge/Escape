@@ -49,12 +49,13 @@ body {
 
     .time {
         margin: 0;
-        padding: 20px;
+        padding: 0.5em;
         position: fixed;
         bottom: 0;
         background-color: var(--primary-color);
         width: 100%;
         color: var(--text-color);
+        font-size: 1.5rem;
     }
 
     .footer {
