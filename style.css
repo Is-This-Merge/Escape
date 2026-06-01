@@ -32,10 +32,9 @@ body {
     justify-content: center;
     min-height: 100vh;
     margin: 0;
-    padding: 0;
+    padding: 20px;
 }
 
-/* 중앙 정렬용 추가 컨테이너가 있을 경우를 위한 대비 */
 .center_container {
     display: flex;
     flex-direction: column;
@@ -46,28 +45,43 @@ body {
     padding: 0;
 }
 
+/* 엔딩 큰 제목 스타일 (Pretendard 명시 및 디자인 강조) */
 .header {
-    font-size: 2em;
+    font-family: 'Pretendard', Arial, sans-serif;
+    font-size: 3.5em; /* 크기를 키워 시원하게 변경 */
+    font-weight: 800;  /* 굵게 적용 */
+    letter-spacing: -1px;
     margin: 0;
-    padding: 20px;
+    padding: 10px 0 30px 0;
+    color: var(--text-color);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .center_container .header {
     padding: 2em;
 }
 
+/* ★ [핵심 변경] 전체적인 엔딩화면 UI 디자인을 가로로 길게 설정 */
 .content {
-    margin: 0;
+    display: flex;
+    flex-direction: row; /* 가로 배열 */
+    align-items: flex-start; /* 상단 기준 정렬 */
+    justify-content: center;
+    gap: 40px; /* 좌측 입력창과 우측 리스트 사이의 여백 */
+    width: 100%;
+    max-width: 1100px; /* 전체 최대 가로폭 확장 */
+    margin: 0 auto;
     padding: 20px;
 }
 
 .footer {
-    margin: 0;
+    margin: 20px 0 0 0;
     padding: 20px;
     font-size: 0.8em;
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: rgba(255, 255, 255, 0.4);
 }
 
 /* ── 공통 타이포그래피 ── */
@@ -120,7 +134,6 @@ button:hover {
     color: var(--muted);
 }
 
-/* 하단 고정 시간 바 (업데이트 반영) */
 .time {
     margin: 0;
     padding: 0.5em;
@@ -133,17 +146,18 @@ button:hover {
     font-weight: bold;
 }
 
-/* ── Ending 전용: 입력 카드 (Input Card) ── */
+/* ── Ending 전용: 좌측 입력 카드 (폭 고정 및 가로 최적화) ── */
 .input-card {
+    flex: 0 0 360px; /* 좌측 입력창의 가로 폭을 360px로 고정 */
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 28px;
+    padding: 24px;
+    text-align: left; /* 입력 폼 내부 텍스트 왼쪽 정렬 */
 }
 
 .field {
-    margin-bottom: 14px;
+    margin-bottom: 18px;
 }
 
 .field:last-child {
@@ -152,12 +166,12 @@ button:hover {
 
 .field-label {
     display: block;
-    font-size: 0.75em;
+    font-size: 0.8em;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 6px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 8px;
 }
 
 .field-input {
@@ -165,7 +179,7 @@ button:hover {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    padding: 10px 14px;
+    padding: 12px 14px;
     font-size: 0.95em;
     color: var(--text-color);
     outline: none;
@@ -199,83 +213,101 @@ button:hover {
 .time-hint {
     font-size: 0.75em;
     color: rgba(255, 255, 255, 0.3);
-    margin-top: 5px;
+    margin-top: 6px;
 }
 
-/* 기록 추가 버튼 전용 */
 .btn-add {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     background: var(--primary-color);
     color: #000000;
     border: none;
     border-radius: 8px;
-    font-size: 0.95em;
-    font-weight: 600;
+    font-size: 1em;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 6px;
+    margin-top: 10px;
     transition: background 0.15s, transform 0.1s;
 }
 
 .btn-add:hover {
-    background: var(--secondary-color);
-    color: var(--text-color);
+    background: #2980b9;
+    color: #ffffff;
 }
 
 .btn-add:active {
     transform: scale(0.98);
 }
 
-/* ── Ending 전용: 섹션 라벨 ── */
+/* ── Ending 전용: 우측 기록 리스트 구역 (가로로 넓게 확장) ── */
+.records-container {
+    flex: 1; /* 남은 가로 공간을 우측 리스트가 전부 차지 */
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* flex 자식 요소 글자 넘침 방지 */
+}
+
 .sec-label {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .sec-label-text {
-    font-size: 0.75em;
-    font-weight: 600;
+    font-size: 0.85em;
+    font-weight: 700;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
 }
 
 .sec-label-line {
     flex: 1;
     height: 1px;
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .sec-count {
-    font-size: 0.75em;
-    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.85em;
+    color: rgba(255, 255, 255, 0.4);
 }
 
-/* ── Ending 전용: 기록 카드 리스트 ── */
 .records {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+    max-height: 480px; /* 리스트가 너무 길어질 경우 내부 스크롤 형성 */
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* 스크롤바 커스텀 */
+.records::-webkit-scrollbar {
+    width: 6px;
+}
+.records::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
 }
 
 .rec-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
-    padding: 14px 16px;
+    padding: 16px 20px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 20px;
     position: relative;
     overflow: hidden;
-    transition: border-color 0.15s;
+    transition: border-color 0.15s, background-color 0.15s;
     animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .rec-card:hover {
     border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.07);
 }
 
 .rec-card::before {
@@ -284,7 +316,7 @@ button:hover {
     left: 0;
     top: 0;
     bottom: 0;
-    width: 3px;
+    width: 4px;
     background: rgba(255, 255, 255, 0.1);
 }
 
@@ -293,9 +325,9 @@ button:hover {
 .rec-card.r3::before { background: #e67e22; }
 
 .rec-rank {
-    font-size: 1.2em;
-    font-weight: 700;
-    min-width: 32px;
+    font-size: 1.3em;
+    font-weight: 800;
+    min-width: 36px;
     text-align: center;
     color: rgba(255, 255, 255, 0.2);
 }
@@ -307,10 +339,11 @@ button:hover {
 .rec-info {
     flex: 1;
     min-width: 0;
+    text-align: left; /* 닉네임과 날짜 왼쪽 정렬 */
 }
 
 .rec-nick {
-    font-size: 0.95em;
+    font-size: 1.05em;
     font-weight: 600;
     color: var(--text-color);
     white-space: nowrap;
@@ -319,94 +352,11 @@ button:hover {
 }
 
 .rec-date {
-    font-size: 0.75em;
+    font-size: 0.8em;
     color: rgba(255, 255, 255, 0.35);
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
 .rec-time {
-    font-size: 1.3em;
-    font-weight: 700;
-    color: var(--text-color);
-    white-space: nowrap;
-}
-
-.rec-card.r1 .rec-time {
-    color: #f1c40f;
-}
-
-.rec-del {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-    font-size: 0.9em;
-    padding: 4px 2px;
-    flex-shrink: 0;
-    transition: color 0.15s;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.rec-del:hover {
-    color: #e74c3c;
-    background: none;
-}
-
-/* ── Ending 전용: 빈 화면 상태 ── */
-.empty {
-    text-align: center;
-    padding: 48px 0 32px;
-    color: rgba(255, 255, 255, 0.25);
-}
-
-.empty-icon {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-.empty-txt {
-    font-size: 0.9em;
-}
-
-/* ── Ending 전용: 토스트 알림 ── */
-.toast {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%) translateY(12px);
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: var(--text-color);
-    padding: 10px 22px;
-    border-radius: 100px;
-    font-size: 0.85em;
-    opacity: 0;
-    transition: all 0.25s;
-    pointer-events: none;
-    z-index: 99;
-    white-space: nowrap;
-}
-
-.toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-/* ── 애니메이션 효과 ── */
-@keyframes popIn {
-    from { opacity: 0; transform: translateY(-6px) scale(0.98); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%       { transform: translateX(-6px); }
-    40%       { transform: translateX(6px); }
-    60%       { transform: translateX(-4px); }
-    80%       { transform: translateX(4px); }
-}
-
-.shake {
-    animation: shake 0.35s ease;
-}
+    font-size: 1.4em;
+    font-weight: 800;
