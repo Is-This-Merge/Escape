@@ -1,8 +1,12 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+/* ── 기본 변수 및 초기화 ── */
 * {
     font-family: 'Pretendard', Arial, sans-serif;
+    box-sizing: border-box; /* 레이아웃 깨짐 방지 */
 }
 
-:root{
+:root {
     --primary-color: #3498db;
     --secondary-color: black;
     --background-color: #2c3e50;
@@ -18,106 +22,26 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     text-align: center;
-    justify-content: center;
-    align-items: center;
+}
 
-    h1{
-        font-size: 5rem;
-    }
-
-    .container{
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        margin: 0;
-        padding: 0;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
-
-    .header {
-        font-size: 2em;
-        margin: 0;
-        padding: 2em;
-    }
-
-    .content {
-        margin: 0;
-        padding: 2em;
-    }
-
-    .time {
-        margin: 0;
-        padding: 0.5em;
-        position: fixed;
-        bottom: 0;
-        background-color: var(--primary-color);
-        width: 100%;
-        color: var(--text-color);
-        font-size: 1.5rem;
-    }
-
-    .footer {
-        margin: 0;
-        padding: 20px;
-        font-size: 0.8em;
-        align-items: center;
-    }
-
-    button{
-        margin-top: 20px;
-        margin-bottom: 10px;
-        
-        padding: 15px 30px;
-        font-size: 20px;
-
-        background-color: var(--secondary-color);
-        color: var(--text-color);
-
-        border: 2px solid var(--text-color);
-
-        cursor: pointer;
-    }
-
-    button:hover{
-        background-color: var(--primary-color);
-        color: var(--text-color);
-
-    }
-
-    .subtitle{
-        font-size: 2.5rem;
-        margin-bottom: 30px;
-        color: var(--text-color);
-    }
-
-    .guide{
-        margin-top: 50px;
-        padding-top: 20px;
-        border-top: 1px solid var(--muted);
-    }
-
-    h2{
-        font-size: 24px;
-    }
-
-    .guide p{
-        color: var(--text-color);
-    }
-
-    .credit{
-        margin-top: 30px;
-        font-size: 14px;
-        color: var(--muted);
-    }
-}   
-
-
+/* ── 공통 레이아웃 요소 ── */
 .container {
-    align-items: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* 중앙 정렬용 추가 컨테이너가 있을 경우를 위한 대비 */
+.center_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
     margin: 0;
     padding: 0;
 }
@@ -128,12 +52,11 @@ body {
     padding: 20px;
 }
 
-.content {
-    margin: 0;
-    padding: 20px;
+.center_container .header {
+    padding: 2em;
 }
 
-.time {
+.content {
     margin: 0;
     padding: 20px;
 }
@@ -142,10 +65,348 @@ body {
     margin: 0;
     padding: 20px;
     font-size: 0.8em;
-    align-items: center;
     display: flex;
     flex-direction: column;
-}   
+    align-items: center;
+}
 
+/* ── 공통 타이포그래피 ── */
+h1 {
+    font-size: 5rem;
+}
 
+h2 {
+    font-size: 24px;
+}
 
+.subtitle {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+/* ── 공통 버튼 스타일 ── */
+button {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 2px solid var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+button:hover {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+/* ── 가이드 및 크레딧 ── */
+.guide {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--muted);
+}
+
+.guide p {
+    color: var(--text-color);
+}
+
+.credit {
+    margin-top: 30px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+/* 하단 고정 시간 바 (업데이트 반영) */
+.time {
+    margin: 0;
+    padding: 0.5em;
+    position: fixed;
+    bottom: 0;
+    background-color: var(--primary-color);
+    width: 100%;
+    color: var(--text-color);
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* ── Ending 전용: 입력 카드 (Input Card) ── */
+.input-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 28px;
+}
+
+.field {
+    margin-bottom: 14px;
+}
+
+.field:last-child {
+    margin-bottom: 0;
+}
+
+.field-label {
+    display: block;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 6px;
+}
+
+.field-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.95em;
+    color: var(--text-color);
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.field-input:focus {
+    border-color: var(--primary-color);
+}
+
+.field-input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.time-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.time-row .field-input {
+    flex: 1;
+    text-align: center;
+}
+
+.time-sep {
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.time-hint {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 5px;
+}
+
+/* 기록 추가 버튼 전용 */
+.btn-add {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.btn-add:hover {
+    background: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.btn-add:active {
+    transform: scale(0.98);
+}
+
+/* ── Ending 전용: 섹션 라벨 ── */
+.sec-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.sec-label-text {
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.sec-label-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.sec-count {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Ending 전용: 기록 카드 리스트 ── */
+.records {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rec-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.15s;
+    animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rec-card:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.rec-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.rec-card.r1::before { background: #f1c40f; }
+.rec-card.r2::before { background: #95a5a6; }
+.rec-card.r3::before { background: #e67e22; }
+
+.rec-rank {
+    font-size: 1.2em;
+    font-weight: 700;
+    min-width: 32px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.rec-rank.r1 { color: #f1c40f; }
+.rec-rank.r2 { color: #95a5a6; }
+.rec-rank.r3 { color: #e67e22; }
+
+.rec-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.rec-nick {
+    font-size: 0.95em;
+    font-weight: 600;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rec-date {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 2px;
+}
+
+.rec-time {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--text-color);
+    white-space: nowrap;
+}
+
+.rec-card.r1 .rec-time {
+    color: #f1c40f;
+}
+
+.rec-del {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-size: 0.9em;
+    padding: 4px 2px;
+    flex-shrink: 0;
+    transition: color 0.15s;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.rec-del:hover {
+    color: #e74c3c;
+    background: none;
+}
+
+/* ── Ending 전용: 빈 화면 상태 ── */
+.empty {
+    text-align: center;
+    padding: 48px 0 32px;
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.empty-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.empty-txt {
+    font-size: 0.9em;
+}
+
+/* ── Ending 전용: 토스트 알림 ── */
+.toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-color);
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 0.85em;
+    opacity: 0;
+    transition: all 0.25s;
+    pointer-events: none;
+    z-index: 99;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ── 애니메이션 효과 ── */
+@keyframes popIn {
+    from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+}
+
+.shake {
+    animation: shake 0.35s ease;
+}

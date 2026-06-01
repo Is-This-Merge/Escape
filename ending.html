@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Escape</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+
+  <div class="header">The Escape</div>
+
+  <div class="content">
+
+    <div class="input-card">
+      <div class="field">
+        <span class="field-label">닉네임</span>
+        <input class="field-input" id="inp-nick" type="text" placeholder="ex) 탈출왕" maxlength="12">
+      </div>
+      <div class="field">
+        <span class="field-label">기록 시간</span>
+        <div class="time-row">
+          <input class="field-input" id="inp-min" type="number" placeholder="분" min="0" max="99">
+          <span class="time-sep">:</span>
+          <input class="field-input" id="inp-sec" type="number" placeholder="초" min="0" max="59">
+        </div>
+        <div class="time-hint">분(0–99) : 초(0–59)</div>
+      </div>
+      <button class="btn-add" onclick="addRecord()">기록 추가</button>
+    </div>
+
+    <div class="sec-label">
+      <span class="sec-label-text">전체 기록</span>
+      <div class="sec-label-line"></div>
+      <span class="sec-count" id="rec-count">0명</span>
+    </div>
+    <div class="records" id="records-list"></div>
+
+  </div>
+
+  <div class="footer">
+    <span>기록은 이 기기 브라우저에 저장돼요</span>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
