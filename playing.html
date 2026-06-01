@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escape</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/playing.css">
+    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css"/>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>The Escape</h1>
-        </div>
-        <div class="content" id="problem"></div>
+        <h1>The Escape</h1>
+        <div class="content">
+            <div class="card" id="problem"></div>
         </div>
         <div class="time">
             <p id="timer">00:00</p>
         </div>
     </div>
     <script src="js/time.js"></script>
+    <script src="js/problem.js"></script>
 </body>
 </html>

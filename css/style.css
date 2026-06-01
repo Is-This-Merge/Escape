@@ -1,0 +1,20 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #111827;
+    --background-color: #2c3e50;
+    --text-color: #ecf0f1;
+    --muted: #95a5a6;
+    --card: #e5eaee;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Pretendard, Arial, sans-serif;
+}
+
+body {
+    background: var(--background-color);
+    color: var(--text-color);
+}
