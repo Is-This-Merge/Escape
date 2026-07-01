@@ -49,29 +49,5 @@ window.onload = function () {
         }
     });
 
-    const subtitle = document.getElementById("subtitle");
-
-    const text = "Can you escape before it's too late?";
-    let index = 0;
-
-    function typingEffect() {
-
-        if(index < text.length){
-
-            subtitle.textContent += text[index];
-
-            index++;
-
-            setTimeout(typingEffect, 50);
-
-        }
-
-    }
-
-    setTimeout(() => {
-        typingEffect();
-    }, 700);
-
-
 
 };
