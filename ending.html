@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -6,48 +6,49 @@
   <title>The Escape</title>
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/ending.css">
+  <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/screen.css">
   <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+  <script src="js/theme.js"></script>
 </head>
-<body>
+<body class="has-corner-home ending-page">
+<a class="corner-home" href="index.html" aria-label="홈 화면으로 돌아가기" title="홈 화면으로 돌아가기">
+  <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8" /></svg>
+</a>
 <div class="container">
-
-  <div class="header">The Escape</div>
-
+  <div class="background-overlay"></div>
+  <div class="header" id="title" data-concept-title>The Escape</div>
+  <p class="concept-subtitle" data-concept-subtitle></p>
   <div class="content">
-
-    <div class="input-card">
+    <form class="input-card" id="record-form" hidden>
+      <h2>탈출 기록</h2>
+      <p id="completion-message" role="status"></p>
       <div class="field">
-        <span class="field-label">닉네임</span>
-        <input class="field-input" id="inp-nick" type="text" placeholder="ex) 탈출왕" maxlength="12">
+        <label class="field-label" for="inp-nick">닉네임</label>
+        <input class="field-input" id="inp-nick" type="text" placeholder="예: 탈출왕" maxlength="12" required>
       </div>
       <div class="field">
-        <span class="field-label">기록 시간</span>
-        <div class="time-row">
-          <input class="field-input" id="inp-min" type="number" placeholder="분" min="0" max="99">
-          <span class="time-sep">:</span>
-          <input class="field-input" id="inp-sec" type="number" placeholder="초" min="0" max="59">
-        </div>
-        <div class="time-hint">분(0–99) : 초(0–59)</div>
+        <span class="field-label">최종 기록 시간</span>
+        <div class="result-time" id="result-time">--:--</div>
+        <p class="time-hint" id="penalty-note">힌트 사용 시 문제당 10분이 포함됩니다.</p>
       </div>
-      <button class="btn-add" onclick="addRecord()">기록 추가</button>
-    </div>
-
-    <div class="sec-label">
-      <span class="sec-label-text">전체 기록</span>
-      <div class="sec-label-line"></div>
-      <span class="sec-count" id="rec-count">0명</span>
-    </div>
-    <div class="records" id="records-list"></div>
-
+      <button class="btn-add" id="save-record" type="submit">기록 등록</button>
+    </form>
+    <section class="records-container" aria-labelledby="leaderboard-title">
+      <div class="sec-label">
+        <h2 id="leaderboard-title">리더보드</h2>
+        <span id="rec-count">0명</span>
+      </div>
+      <div class="records" id="records-list" aria-live="polite"></div>
+      <nav class="record-pagination" aria-label="순위표 페이지">
+        <button type="button" id="records-prev" aria-label="이전 순위 페이지">이전</button>
+        <span id="records-page" aria-live="polite">1 / 1</span>
+        <button type="button" id="records-next" aria-label="다음 순위 페이지">다음</button>
+      </nav>
+    </section>
   </div>
-
-  <div class="footer">
-    <span>기록은 이 기기 브라우저에 저장돼요</span>
-  </div>
-
 </div>
-
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status"></div>
 <script src="./js/app.js"></script>
 </body>
 </html>

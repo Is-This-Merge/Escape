@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <defs>
+    <linearGradient id="wood" x2="1" y2="1"><stop stop-color="#a57849"/><stop offset=".45" stop-color="#35231c"/><stop offset="1" stop-color="#825039"/></linearGradient>
+    <radialGradient id="light"><stop stop-color="#b5783c" stop-opacity=".22"/><stop offset="1" stop-color="#b5783c" stop-opacity="0"/></radialGradient>
+  </defs>
+  <ellipse cx="1230" cy="340" rx="410" ry="550" fill="url(#light)"/>
+  <g stroke="#79583b" stroke-width="2" opacity=".42">
+    <path d="M0 770h380v25H0m0 100h430v24H0M1180 880h420v24h-420"/>
+    <path d="M80 797v203m220-203v203m970-96v96m250-96v96" stroke-width="12"/>
+  </g>
+  <g stroke="#be9664" opacity=".45">
+    <path d="m1150 130 225 18m-128-65 12 106" stroke-width="9"/>
+    <path d="m1160 135 49 304m151-285-34 285m-71-303 2 173m-13-169-62 567m83-558 96 565"/>
+  </g>
+  <g fill="url(#wood)" stroke="#b38a59" stroke-width="2" opacity=".67">
+    <ellipse cx="1254" cy="339" rx="40" ry="49"/>
+    <path d="M1242 386h24v25h-24zM1219 412q35-19 70 0l-7 120q-29 18-57 0z"/>
+    <circle cx="1209" cy="425" r="13"/><circle cx="1300" cy="425" r="13"/>
+    <path d="m1197 434-28 74 18 8 32-74zm94 8 31 74 18-8-28-74z"/>
+    <circle cx="1176" cy="522" r="11"/><circle cx="1333" cy="522" r="11"/>
+    <path d="m1166 534-6 69 17 3 11-69zm155 3 11 69 17-3-6-69z"/>
+    <ellipse cx="1168" cy="619" rx="12" ry="20"/><ellipse cx="1340" cy="619" rx="12" ry="20"/>
+    <circle cx="1237" cy="547" r="13"/><circle cx="1269" cy="547" r="13"/>
+    <path d="m1224 562-16 94 23 3 20-94zm33 3 20 94 23-3-16-94z"/>
+    <circle cx="1218" cy="673" r="12"/><circle cx="1289" cy="673" r="12"/>
+    <path d="m1206 689-9 100 24 1 9-101zm71 0 9 101 24-1-9-100zM1196 795h26l-1 20h-49q-4-14 25-20zm90 0h25q29 6 25 20h-49z"/>
+  </g>
+  <g stroke="#25140f" stroke-width="3" opacity=".9"><path d="m1231 337 10 2m25-2 10-2m-29 28 14-1m-25 64 3 83m22-87-4 88"/></g>
+  <g fill="#715333" stroke="#b28b59" opacity=".38">
+    <path d="m120 735 32-96 16 5-28 96zm65 8 5-118h17l4 118zm64-2-15-94 16-3 21 93z"/>
+    <rect x="98" y="737" width="192" height="30" rx="3"/>
+    <path d="M101 863v-55h120v55z"/>
+    <path d="m101 808 60 37 60-37" fill="none"/>
+  </g>
+</svg>

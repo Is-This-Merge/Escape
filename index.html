@@ -1,38 +1,39 @@
-<!DOCTYPE html>
-<html lang = "en">
+﻿<!DOCTYPE html>
+<html lang = "ko">
 <head>
-    <title>THE ESCAPE</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Escape</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+    <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/screen.css">
+    <script src="js/theme.js"></script>
 </head>
-<body>
+<body class="home-page">
     <div class="background-overlay"></div>
 
     <div class="container">
-        <h1 id = "title">The Escape</h1>
+        <h1 id="title" data-concept-title>The Escape</h1>
+        <p class="concept-subtitle" data-concept-subtitle></p>
 
-        <p class="subtitle" id = "subtitle">
-            Can you escape before it's too late?
-        </p>
+        <a class="menu-button" id="start-button" href="playing.html">게임 시작</a>
 
-        <a href="playing.html">
-            <button id = "start-button">GAME START</button>
-        </a>
-
-        <p id="enter-text">Press ENTER to start</p>
-
-        <a href="guide.html">
-            <button id="guide-button">How To Play</button>
-        </a>
+        <a class="menu-button leaderboard-link" href="ending.html?view=leaderboard">순위표</a>
 
         <div class="footer">
-            <p>&copy; 2026 NULL. All rights reserved.</p>
+            <p>&copy; 2026 NULL. all rights reserved.</p>
         </div>
 
     </div>
 
     <script src="js/index.js"></script>
     
+<button type="button" id="theme-toggle" aria-label="디자인 컨셉 전환">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4" />
+    </svg>
+</button>
 </body>
 </html>

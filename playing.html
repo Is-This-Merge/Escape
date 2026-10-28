@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 
 <head>
@@ -12,26 +12,71 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/playing.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+    <link rel="stylesheet" href="./css/themes.css">
+    <link rel="stylesheet" href="./css/screen.css">
+    <script src="js/theme.js"></script>
 </head>
 
-<body>
+<body class="playing-page">
 
 <div class="background-overlay"></div>
 
 <div class="container">
 
-    <h1>THE ESCAPE</h1>
+    <header class="play-heading">
+        <h1 data-concept-title>The Escape</h1>
+        <p class="concept-subtitle" data-concept-subtitle></p>
+    </header>
+
+    <div class="time" id="timer">00:00</div>
 
     <div class="content">
-        <div id="problem"></div>
+        <section class="card hint-card" aria-labelledby="key-title">
+            <h2 id="key-title">힌트 찾기</h2>
+            <form id="key-form">
+                <label for="problem-key">문제 키</label>
+                <div class="answer-row">
+                    <input id="problem-key" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="32" required placeholder="키 입력">
+                    <button type="submit">힌트 확인</button>
+                </div>
+            </form>
+            <p class="feedback">첫 조회 +10분 · 다시 보기 무료</p>
+            <p id="key-error" class="feedback" role="status"></p>
+        </section>
     </div>
+    <footer class="footer"><p>&copy; 2026 NULL. all rights reserved.</p></footer>
 
 </div>
 
-<div class="time" id="timer">00:00</div>
+<div class="play-tools"><button type="button" id="open-guide">게임 방법</button><button type="button" id="open-ending" aria-label="엔딩 바로가기" title="엔딩 바로가기">→</button></div>
+<dialog id="hint-dialog" aria-labelledby="hint-title" aria-describedby="hint-text key-feedback">
+    <h2 id="hint-title">힌트</h2>
+    <p id="hint-text"></p>
+    <p id="key-feedback" class="feedback"></p>
+    <button type="button" id="close-hint" autofocus>닫기</button>
+</dialog>
+<dialog id="guide-dialog" aria-labelledby="guide-dialog-title">
+    <header class="guide-dialog-header"><h2 id="guide-dialog-title">게임 방법</h2><button type="button" id="close-guide" aria-label="게임 방법 닫기">닫기</button></header>
+    <iframe id="guide-frame" title="사이트 및 자물쇠 이용 방법" src="guide.html?embed=1"></iframe>
+</dialog>
+<dialog id="ending-dialog" aria-labelledby="ending-dialog-title">
+    <form id="ending-password-form">
+        <h2 id="ending-dialog-title">엔딩 바로가기</h2>
+        <p>비밀번호를 입력하면 현재 시간으로 게임을 종료합니다.</p>
+        <label for="ending-password">비밀번호</label>
+        <input id="ending-password" type="password" inputmode="numeric" autocomplete="off" required>
+        <p id="ending-error" role="status"></p>
+        <div class="dialog-actions">
+            <button type="button" id="cancel-ending">취소</button>
+            <button type="submit">확인</button>
+        </div>
+    </form>
+</dialog>
 
 <script src="js/time.js"></script>
 <script src="js/problem.js"></script>
+<script src="js/ending-shortcut.js"></script>
+<script src="js/guide-dialog.js"></script>
 
 </body>
 </html>

@@ -132,3 +132,15 @@ button:hover {
         opacity: .3;
     }
 }
+
+.container { min-height: calc(100svh - 96px); padding: 2rem 1.5rem 5rem; }
+.menu-button { display: flex; align-items: center; justify-content: center; width: min(360px, 100%); min-height: 64px; padding: 1rem; border: 1px solid var(--muted); border-radius: 12px; color: var(--text-color); font-size: 1.1rem; font-weight: 700; }
+.menu-button + .menu-button { margin-top: 1rem; }
+.menu-button:active { background: var(--glow); }
+#enter-text { animation: none; letter-spacing: 0; }
+#title { font-size: clamp(3rem, 9vw, 5rem); }
+@media (max-height: 800px) and (min-width: 700px) {
+    #title { font-size: 4.5rem; }
+    .subtitle { margin-bottom: 1.5rem; }
+    .container { padding-top: 1.5rem; }
+}

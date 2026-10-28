@@ -39,7 +39,7 @@ body {
 
     margin-bottom: 1rem;
 
-    text-transform: uppercase;
+    text-transform: none;
 
     text-shadow:
         0 0 10px rgba(52,152,219,.5),

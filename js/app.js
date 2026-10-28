@@ -1,122 +1,87 @@
-const STORAGE_KEY = 'the_escape_records';
-
-function loadRecords() {
+const concept = EscapeTheme.current;
+let boardPage = 0;
+let pageSize = 3;
+let completedRun;
+try { completedRun = JSON.parse(localStorage.getItem('escape_run_' + concept)); } catch {}
+const validCompletion = completedRun?.concept === concept && completedRun?.solved === 5
+  && Number.isFinite(completedRun?.finishedAt) && Number.isFinite(completedRun?.startedAt)
+  && completedRun.finishedAt >= completedRun.startedAt && Number.isFinite(completedRun?.penalty);
+const totalSec = validCompletion ? Math.floor((completedRun.finishedAt - completedRun.startedAt) / 1000) + completedRun.penalty : null;
+const showResult = new URLSearchParams(location.search).get('view') === 'result' && validCompletion;
+document.getElementById('record-form').hidden = !showResult;
+function loadRecords(id) {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch {
-    return [];
-  }
+    const records = JSON.parse(localStorage.getItem('escape_records_' + id));
+    return Array.isArray(records) ? records.filter(r => typeof r.nick === 'string' && Number.isFinite(r.totalSec) && r.totalSec >= 0).sort((a, b) => a.totalSec - b.totalSec || a.ts - b.ts) : [];
+  } catch { return []; }
 }
-
-function saveRecords(records) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+function formatTime(seconds) {
+  return String(Math.floor(seconds / 60)).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0');
 }
-
-function showToast(msg) {
+function showToast(message) {
   const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2000);
+  toast.textContent = message; toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
 }
-
-function shake(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.classList.remove('shake');
-  void el.offsetWidth;
-  el.classList.add('shake');
-  setTimeout(() => el.classList.remove('shake'), 400);
-}
-
-function formatTime(totalSec) {
-  const m = Math.floor(totalSec / 60);
-  const s = totalSec % 60;
-  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-}
-
-function formatDate(ts) {
-  const d = new Date(ts);
-  return `${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-}
-
-function rankClass(i) {
-  return i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : '';
-}
-
-function rankLabel(i) {
-  return i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
-}
-
-function escapeHtml(str) {
-  return str.replace(/[&<>"']/g, c =>
-    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])
-  );
-}
-
 function renderRecords() {
-  const records = loadRecords();
+  const records = loadRecords(concept);
+  document.getElementById('rec-count').textContent = records.length + '명';
   const list = document.getElementById('records-list');
-  const count = document.getElementById('rec-count');
-
-  count.textContent = `${records.length}명`;
-
-  if (records.length === 0) {
-    list.innerHTML = `
-      <div class="empty">
-        <div class="empty-icon">🏁</div>
-        <div class="empty-txt">아직 기록이 없어요</div>
-      </div>`;
-    return;
-  }
-
-  list.innerHTML = records.map((r, i) => `
-    <div class="rec-card ${rankClass(i)}">
-      <div class="rec-rank ${rankClass(i)}">${rankLabel(i)}</div>
-      <div class="rec-info">
-        <div class="rec-nick">${escapeHtml(r.nick)}</div>
-        <div class="rec-date">${formatDate(r.ts)}</div>
-      </div>
-      <div class="rec-time">${formatTime(r.totalSec)}</div>
-      <button class="rec-del" onclick="deleteRecord(${i})" title="삭제">✕</button>
-    </div>
-  `).join('');
+  list.replaceChildren();
+  const pageCount = Math.max(1, Math.ceil(records.length / pageSize));
+  boardPage = Math.min(boardPage, pageCount - 1);
+  document.getElementById('records-page').textContent = `${boardPage + 1} / ${pageCount}`;
+  document.getElementById('records-prev').disabled = boardPage === 0;
+  document.getElementById('records-next').disabled = boardPage >= pageCount - 1;
+  if (!records.length) { list.textContent = '아직 기록이 없습니다. 첫 탈출 기록을 남겨보세요.'; return; }
+  records.slice(boardPage * pageSize, (boardPage + 1) * pageSize).forEach((record, offset) => {
+    const index = boardPage * pageSize + offset;
+    const card = document.createElement('div');
+    card.className = 'rec-card ' + (index < 3 ? 'r' + (index + 1) : '');
+    const rank = document.createElement('div'); rank.className = 'rec-rank'; rank.textContent = (index + 1) + '위';
+    const info = document.createElement('div'); info.className = 'rec-info';
+    const nick = document.createElement('div'); nick.className = 'rec-nick'; nick.textContent = record.nick;
+    const date = document.createElement('div'); date.className = 'rec-date';
+    date.textContent = new Date(record.ts).toLocaleString('ko-KR');
+    const time = document.createElement('div'); time.className = 'rec-time'; time.textContent = formatTime(record.totalSec);
+    info.append(nick, date); card.append(rank, info, time); list.append(card);
+  });
 }
-
-function addRecord() {
+function updateCompletion() {
+  const saved = validCompletion && loadRecords(concept).some(r => r.id === completedRun.id);
+  document.getElementById('result-time').textContent = validCompletion ? formatTime(totalSec) : '--:--';
+  document.getElementById('completion-message').textContent = !validCompletion ? '문제 5개를 모두 해결하면 탈출 시간을 등록할 수 있습니다.' : saved ? '등록이 완료된 탈출 기록입니다.' : '탈출 성공! 닉네임을 입력해 기록을 남겨주세요.';
+  document.getElementById('save-record').disabled = !validCompletion || saved;
+  document.getElementById('inp-nick').disabled = !validCompletion || saved;
+  if (validCompletion) document.getElementById('penalty-note').textContent = '힌트 추가 시간: ' + formatTime(completedRun.penalty);
+}
+document.getElementById('record-form').addEventListener('submit', event => {
+  event.preventDefault();
+  if (!showResult) return;
   const nick = document.getElementById('inp-nick').value.trim();
-  const minVal = document.getElementById('inp-min').value;
-  const secVal = document.getElementById('inp-sec').value;
-
-  if (!nick) { showToast('닉네임을 입력해주세요'); shake('inp-nick'); return; }
-  if (minVal === '' || secVal === '') { showToast('시간을 모두 입력해주세요'); return; }
-
-  const min = parseInt(minVal, 10);
-  const sec = parseInt(secVal, 10);
-
-  if (isNaN(min) || min < 0 || min > 99) { showToast('분은 0–99 사이로 입력해주세요'); shake('inp-min'); return; }
-  if (isNaN(sec) || sec < 0 || sec > 59) { showToast('초는 0–59 사이로 입력해주세요'); shake('inp-sec'); return; }
-
-  const totalSec = min * 60 + sec;
-  const records = loadRecords();
-
-  records.push({ nick, totalSec, ts: Date.now() });
-  records.sort((a, b) => a.totalSec - b.totalSec);
-
-  saveRecords(records);
-  renderRecords();
-  showToast('기록이 추가됐어요! 🎉');
-
-  document.getElementById('inp-nick').value = '';
-  document.getElementById('inp-min').value = '';
-  document.getElementById('inp-sec').value = '';
+  if (!nick || nick.length > 12) { showToast('닉네임을 1~12자로 입력하세요.'); return; }
+  const records = loadRecords(concept);
+  if (records.some(r => r.id === completedRun.id)) { updateCompletion(); return; }
+  records.push({ id: completedRun.id, concept, nick, totalSec, penalty: completedRun.penalty, ts: completedRun.finishedAt });
+  try { localStorage.setItem('escape_records_' + concept, JSON.stringify(records)); }
+  catch { showToast('저장하지 못했습니다. 브라우저 저장 공간을 확인하고 다시 시도하세요.'); return; }
+  boardPage = 0;
+  renderRecords(); updateCompletion(); showToast('탈출 기록을 등록했습니다!');
+});
+document.getElementById('records-prev').addEventListener('click', () => {
+  if (boardPage > 0) { boardPage--; renderRecords(); }
+});
+document.getElementById('records-next').addEventListener('click', () => {
+  if ((boardPage + 1) * pageSize < loadRecords(concept).length) { boardPage++; renderRecords(); }
+});
+if (typeof ResizeObserver !== 'undefined') {
+  new ResizeObserver(() => {
+    const list = document.getElementById('records-list');
+    const style = getComputedStyle(list);
+    const row = parseFloat(style.getPropertyValue('--record-height')) || 88;
+    const gap = parseFloat(style.rowGap) || 8;
+    const count = Math.max(1, Math.floor((list.clientHeight + gap) / (row + gap)));
+    if (count !== pageSize) { pageSize = count; boardPage = 0; renderRecords(); }
+  }).observe(document.getElementById('records-list'));
 }
-
-function deleteRecord(index) {
-  const records = loadRecords();
-  records.splice(index, 1);
-  saveRecords(records);
-  renderRecords();
-  showToast('기록을 삭제했어요');
-}
-
-renderRecords();
+renderRecords(); updateCompletion();
