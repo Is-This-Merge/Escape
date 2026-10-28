@@ -1,4 +1,4 @@
-﻿const { test } = require('node:test');
+const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
@@ -81,15 +81,19 @@ test('home leaderboard hides result even with a finished run and cannot submit',
   const result = setup('doll', s.storage, '?view=result'); result.file('app.js');
   assert.equal(result.el('record-form').hidden, false);
 });
-test('guide tabs switch sections and support keyboard navigation', () => {
-  const s = setup('doll'); s.file('guide.js');
-  s.el('lock-tab').handlers.click();
-  assert.equal(s.el('site-guide').hidden, true);
-  assert.equal(s.el('lock-guide').hidden, false);
-  assert.equal(s.el('lock-tab')['aria-selected'], 'true');
-  s.el('lock-tab').handlers.keydown({ key: 'ArrowLeft', preventDefault() {} });
-  assert.equal(s.el('site-guide').hidden, false);
-  assert.equal(s.el('lock-guide').hidden, true);
+test('guide shows both sections without tab controls and escape requests closing', () => {
+  const html = fs.readFileSync('guide.html', 'utf8');
+  assert.ok(!html.includes('role="tab'));
+  for (const id of ['site-guide', 'lock-guide']) {
+    const tag = html.match(new RegExp('<section[^>]*id="' + id + '"[^>]*>'))[0];
+    assert.ok(!tag.includes('hidden'));
+  }
+  const s = setup('doll');
+  let message;
+  s.context.window = { parent: { postMessage(value) { message = value; } } };
+  s.file('guide.js');
+  s.context.document.handlers.keydown({ key: 'Escape' });
+  assert.equal(message, 'close-guide');
 });
 test('guide modal opens and closes without ending or resetting the game', () => {
   const s = setup('doll');

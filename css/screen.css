@@ -306,3 +306,29 @@ body.playing-page {
   border: 1px solid var(--primary-color); border-radius: var(--panel-radius);
   background: var(--primary-color); color: var(--background-color); cursor: pointer;
 }
+/* Keep hints content-sized, including touch browsers' native dialog layout. */
+#hint-dialog {
+  inset: 0; margin: auto; box-sizing: border-box;
+  width: min(560px, calc(100vw - 48px)); height: fit-content;
+  min-width: 0; min-height: 0; max-height: calc(100dvh - 48px);
+  align-self: center; justify-self: center;
+}
+#hint-dialog[open] {
+  display: grid; grid-template-rows: repeat(4, max-content);
+  align-content: start; align-items: start; gap: 20px;
+}
+/* Both instruction groups remain visible; no tabs or hidden panels. */
+.guide-page .guide-manual { grid-template-rows: auto minmax(0, 1fr); }
+.guide-embedded .guide-page .guide-manual { grid-template-rows: minmax(0, 1fr); }
+.manual-columns { min-height: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--screen-gap); }
+.manual-columns .manual-panel { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 16px; }
+.manual-columns .manual-panel > h2 { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--panel-edge); color: var(--primary-color); text-align: center; font-size: 26px; }
+.manual-columns .manual-steps { grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 12px; }
+:root[data-theme] .manual-columns .manual-steps li { padding: 10px 16px; background: none; border: 0; box-shadow: none; border-radius: 0; }
+.manual-columns h3 { font-size: 24px; line-height: 1.3; margin-bottom: 8px; }
+.manual-columns .manual-steps p { line-height: 1.45; }
+@media (max-height: 650px) {
+  .manual-columns .manual-panel, .manual-columns .manual-steps { gap: 8px; }
+  :root[data-theme] .manual-columns .manual-steps li { padding: 4px 10px; }
+  .manual-columns h3 { font-size: 22px; margin-bottom: 4px; }
+}
