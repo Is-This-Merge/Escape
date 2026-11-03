@@ -16,7 +16,7 @@
 
 `js/problem.js`의 `puzzleSets`에서 `key`, `title`, `hints`를 바꿉니다. `hints`는 일반적인 단서부터 구체적인 풀이 순서로 작성하는 힌트 문자열 배열입니다. 배열의 길이에 따라 팝업의 단계 수가 결정됩니다. key는 숫자 세 자리 문자열로 컨셉 내에서 고유하게 지정합니다. 양 끝 공백은 무시하며, 앞의 0은 유지합니다. 현재 컨셉에 속한 문제만 조회하며 웹에서 정답을 판정하지 않습니다.
 
-예시 키는 두 컨셉 모두 `001`~`005`입니다. 같은 키라도 현재 컨셉에 맞는 힌트를 보여줍니다. 모든 키는 처음부터 순서에 관계없이 조회할 수 있습니다.
+운영용 키와 힌트는 `js/problem.js`에서 확인합니다. 모든 키는 처음부터 순서에 관계없이 조회할 수 있습니다.
 원형 게이지는 힌트 추가 시간을 포함한 표시 시간을 기준으로 90분에 가득 찹니다. 90분이 지나도 게이지는 100%를 유지하며, 시간은 계속 측정합니다.
 
 | 컨셉 | 문제 1 | 문제 2 | 문제 3 | 문제 4 | 문제 5 |
@@ -24,20 +24,73 @@
 | 저주받은 인형 | 10 | 0314 | 솔 | 인형 | 1357 |
 | 옛 은신처 | 25 | 917 | 동쪽 | 12 | 8642 |
 
-## 외부 리더보드 제안: Supabase
-현재 외부 전송은 연결하지 않았습니다. Supabase 데이터베이스와 REST API를 쓰면 별도의 상시 서버 없이 공용 순위표를 만들 수 있습니다.
+## 공용 리더보드: Supabase 설정
 
-1. `escape_records` 테이블에 id(UUID 기본 키), concept(doll/hideout), nick(1~12자), total_sec(0 이상 정수), penalty, created_at을 만듭니다.
-2. 공개 순위 조회는 RLS 정책으로 SELECT만 허용합니다. concept 필터와 total_sec 오름차순, created_at 오름차순으로 조회합니다.
-3. 등록은 Edge Function의 POST 엔드포인트로 받고, 입력 검사·요청 제한 후 저장합니다. id를 고유 키로 사용해 재전송 시 중복을 방지합니다. 서비스 비밀 키는 함수에만 보관합니다.
-4. `js/app.js`에서 로컬 저장 성공 후 동일 기록을 POST합니다. 실패 시 로컬 기록을 유지하고 별도의 재전송 상태와 버튼을 제공합니다.
-5. 목록은 서버에서 다시 조회하며, 네트워크 장애 시 “이 기기 기록”으로 명확하게 표시해 로컬 목록을 보여줍니다.
+게임 진행·타이머는 이 브라우저의 localStorage에 유지하고, 리더보드 기록은 Supabase에만 저장합니다. 설정 전이나 네트워크 오류 시 로컬 순위표로 자동 전환하지 않습니다. 기존 `escape_records_*` 로컬 기록은 삭제하지 않지만 공용 순위표로 자동 업로드하지 않습니다.
 
-단순 수집만 필요하면 Google Forms에 닉네임·컨셉·탈출 시간을 제출하는 방식도 가능하지만, 이 페이지 안의 공용 순위표까지 만들려면 Supabase가 적합합니다.
+### 1. DB 생성
 
-현재 시간과 종료 판정은 클라이언트에 있으므로 기록을 조작할 수 있습니다. 공정한 공개 대회용이라면 시작 시각·완료 판정을 서버에서도 관리해야 합니다.
+1. Supabase 프로젝트를 만듭니다.
+2. SQL Editor에서 `supabase/schema.sql`을 **처음 한 번** 실행합니다. 테이블이 이미 존재하면 먼저 구조를 검토하세요. 기존 테이블을 삭제하는 스크립트가 아닙니다.
+3. `supabase/verify-policies.sql`을 실행해 익명 등록, 일반 계정 등록, 직원 권한 해제, 수정·삭제 차단을 확인합니다. 이 검사는 임시 사용자와 기록을 만든 뒤 모두 롤백합니다.
+
+`escape_records`는 컨셉별로 조회하고, 최종 시간 → 등록 시각 → 게임 ID 순서로 정렬합니다. 페이지 단위로 요청하므로 Supabase의 기본 조회 행 제한에 의해 전체 순위표가 잘리지 않습니다. `created_at`과 `staff_id`는 DB에서 채우며 웹에서 지정할 수 없습니다. 직원 ID는 공개 조회 대상에서 제외합니다.
+
+### 2. 직원 계정 설정
+
+1. Supabase Authentication 설정에서 **새 사용자 회원가입을 비활성화**합니다.
+2. Authentication → Users → Add user에서 직원 이메일·비밀번호로 계정을 생성하고 이메일을 확인 완료 처리합니다.
+3. 생성된 사용자 UUID를 복사해 SQL Editor에서 실행합니다. 아래 값은 실제 UUID로 바꿉니다.
+
+```sql
+insert into public.escape_staff (user_id)
+values ('직원-사용자-UUID')
+on conflict do nothing;
+```
+
+로그인 성공만으로 등록 권한이 생기지 않습니다. `escape_staff`에 존재하는 사용자만 RLS가 등록을 허용합니다. 권한을 해제하려면 다음 SQL을 실행합니다. 로그인 세션이 남아 있어도 이후 등록은 DB에서 차단됩니다.
+
+```sql
+delete from public.escape_staff where user_id = '직원-사용자-UUID';
+```
+
+기록 수정·삭제는 Supabase 관리자 화면에서 처리합니다. 회원가입·직원 권한 부여·기록 삭제 기능은 웹에 제공하지 않습니다.
+
+### 3. 공개 연결 설정
+
+`js/supabase-config.js`에 프로젝트 URL과 **새 publishable key**를 입력합니다.
+
+```js
+window.ESCAPE_SUPABASE = Object.freeze({
+  url: 'https://프로젝트-ID.supabase.co',
+  publishableKey: 'sb_publishable_공개용키'
+});
+```
+
+이 두 값은 public repo에 올려도 됩니다. 직원 비밀번호, `sb_secret_...`, `service_role`, DB 접속 비밀번호는 입력하지 않습니다. 프런트엔드에 포함된 값은 GitHub Secrets로 빌드해도 브라우저에서 보입니다. 현재 구현은 `sb_publishable_` 키만 받습니다.
+
+Supabase JS SDK 2.49.1을 CDN에서 로드합니다. 기존처럼 GitHub Pages에 정적 파일을 배포하면 되며 별도 빌드나 서버 프로세스는 필요하지 않습니다. Supabase 서비스와 CDN에 접근할 수 있는 인터넷 연결이 필요합니다.
+
+### 4. 운영 흐름
+
+- 홈 왼쪽 위 **직원 로그인** → 해당 패드에서 직원 로그인 → 홈으로 돌아가기 → 게임 시작
+- 게임 종료 → 기록 입력 팝업 → DB 저장 성공 → 공용 리더보드
+- 로그인이 풀렸다면 기록 팝업의 **직원 로그인**을 통해 로그인 후 **기록 등록으로 돌아가기**를 누릅니다. 게임의 확정 시간은 유지됩니다.
+- 저장 실패 시 팝업을 유지합니다. 같은 게임 ID로 다시 등록해도 중복 기록은 생기지 않습니다.
+- 홈의 순위표는 로그인 없이 볼 수 있습니다. 목록 조회 실패 시 **다시 시도**를 누릅니다.
+- 패드 사용 종료 후 직원 화면에서 **이 패드에서 로그아웃**합니다. 직원 세션은 로그인한 브라우저에 보관되며 다른 브라우저에는 공유되지 않습니다.
+
+닉네임·기록 시간·등록 시각은 공개됩니다. 실명이나 연락처 대신 닉네임을 사용하세요. 시간 계산은 여전히 브라우저에서 이루어집니다. 이 구현은 직원 계정 외의 DB 등록을 차단하지만, 로그인된 패드에서 조작한 시간을 서버에서 판별하지는 않습니다.
+
+### 검증
+
+```sh
+node --test tests/*.test.cjs
+```
+
+로컬 테스트는 DB API를 모킹하여 로그인, 권한 실패, 중복 등록, 재시도, 컨셉 필터, 페이지 처리를 검증합니다. 실제 Supabase 프로젝트에서 SQL 권한 검사와 서로 다른 두 브라우저의 저장·조회 확인도 진행하세요.
 
 공식 문서:
-- https://supabase.com/docs/guides/api/quickstart
+- https://supabase.com/docs/guides/getting-started/api-keys
 - https://supabase.com/docs/guides/database/postgres/row-level-security
-- https://supabase.com/docs/reference/javascript/insert
+- https://supabase.com/docs/reference/javascript/auth-signinwithpassword

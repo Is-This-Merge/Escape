@@ -35,14 +35,16 @@
       </div>
       <button class="btn-add" id="save-record" type="submit">기록 등록</button>
       <p id="record-error" role="alert"></p>
+      <button type="button" id="record-login">직원 로그인</button>
     </form>
     </dialog>
     <section class="records-container" id="leaderboard" aria-labelledby="leaderboard-title" hidden>
       <div class="sec-label">
-        <h2 id="leaderboard-title"></h2>
+        <h2 id="leaderboard-title">리더보드</h2>
         <span id="rec-count">0명</span>
       </div>
       <div class="records" id="records-list" aria-live="polite"></div>
+      <div class="board-feedback"><p id="board-status" role="status"></p><button type="button" id="board-retry" hidden>다시 시도</button></div>
       <nav class="record-pagination" aria-label="순위표 페이지">
         <button type="button" id="records-prev" aria-label="이전 순위 페이지">이전</button>
         <span id="records-page" aria-live="polite">1 / 1</span>
@@ -52,6 +54,9 @@
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
-<script src="./js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/supabase.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
