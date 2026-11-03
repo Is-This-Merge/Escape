@@ -41,6 +41,13 @@
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4"/></svg>
         </button>
     </nav>
+    <dialog id="logout-dialog" aria-labelledby="logout-title" aria-describedby="logout-description">
+        <button type="button" id="cancel-logout" aria-label="로그아웃 취소" autofocus><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        <h2 id="logout-title">직원 로그아웃</h2>
+        <p id="logout-description">이 패드에서 로그아웃할까요?</p>
+        <p id="logout-error" role="alert"></p>
+        <button type="button" id="confirm-logout">로그아웃</button>
+    </dialog>
     <dialog id="artwork-dialog" aria-labelledby="artwork-title">
         <header class="artwork-header">
             <h2 id="artwork-title">포스터</h2>

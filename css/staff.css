@@ -3,6 +3,6 @@
 .staff-panel { width: min(480px, 100%); display: grid; gap: 24px; }
 .staff-panel h1 { font-size: 32px; margin: 0; }
 .staff-panel p { font-size: 20px; line-height: 1.5; }
-#staff-form, #staff-actions { display: grid; gap: 14px; }
+#staff-form { display: grid; gap: 14px; }
 .staff-panel input { width: 100%; min-height: 52px; padding: 10px 14px; background: var(--card); color: var(--text-color); border: 1px solid var(--muted); }
-.staff-panel button, #staff-continue { min-height: 52px; padding: 12px; border: 0; background: var(--primary-color); color: var(--background-color); font-size: 22px; text-align: center; cursor: pointer; }
+.staff-panel button { min-height: 52px; padding: 12px; border: 0; background: var(--primary-color); color: var(--background-color); font-size: 22px; text-align: center; cursor: pointer; }
