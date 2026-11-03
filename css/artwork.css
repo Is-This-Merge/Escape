@@ -1,9 +1,19 @@
 ﻿/* Artwork viewer; the home page retains its original layout. */
-#open-artwork {
-  position: fixed; top: max(20px, env(safe-area-inset-top)); right: 24px;
-  width: auto; height: auto; min-height: 48px; padding: 8px 16px;
-  background: transparent; border: 0; color: var(--text-color); font-size: 22px;
+.home-tools {
+  position: fixed; right: max(24px, env(safe-area-inset-right));
+  bottom: calc(var(--footer-space) + 4px); z-index: 4;
+  display: flex; align-items: center; gap: 12px;
 }
+.home-tools :is(.home-tool, #open-artwork, #theme-toggle) {
+  position: relative; inset: auto; display: grid; place-items: center;
+  width: 56px; height: 56px; min-height: 56px; padding: 0;
+  border: 0; border-radius: 50%; background: transparent;
+  color: var(--muted); box-shadow: none; transform: none; cursor: pointer;
+}
+.home-tools .home-tool:hover { color: var(--primary-color); }
+.home-tools #staff-link[data-status="signed-in"] { color: var(--primary-color); }
+.staff-badge { display: none; position: absolute; right: 2px; bottom: 4px; width: 20px; height: 20px; border-radius: 50%; background: #a6dfb0; color: #102516; place-items: center; }
+#staff-link[data-status="signed-in"] .staff-badge { display: grid; }
 #artwork-dialog {
   inset: 0; margin: auto; width: min(1000px, calc(100vw - 32px));
   height: calc(100dvh - 48px); max-height: calc(100dvh - 48px);

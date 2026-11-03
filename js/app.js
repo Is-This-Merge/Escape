@@ -91,7 +91,6 @@
   el('result-time').textContent = valid ? format(total) : '--:--';
   el('completion-message').textContent = '탈출 성공! 닉네임을 입력해 기록을 남겨주세요.';
   if (valid) el('penalty-note').textContent = '힌트 추가 시간: ' + format(run.penalty);
-  el('record-login').addEventListener('click', () => { location.href = 'staff.html?return=result'; });
   if (typeof ResizeObserver !== 'undefined') {
     new ResizeObserver(() => {
       const list = el('records-list');
