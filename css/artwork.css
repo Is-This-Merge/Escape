@@ -11,19 +11,7 @@
   color: var(--muted); box-shadow: none; transform: none; cursor: pointer;
 }
 .home-tools .home-tool:hover { color: var(--primary-color); }
-.home-tools #staff-link[data-status="signed-in"] { color: var(--primary-color); }
-.staff-badge { display: none; position: absolute; right: 2px; bottom: 4px; width: 20px; height: 20px; border-radius: 50%; background: #a6dfb0; color: #102516; place-items: center; }
-#staff-link[data-status="signed-in"] .staff-badge { display: grid; }
 .home-page .container { padding-top: 88px; }
-#logout-dialog { inset: 0; margin: auto; width: min(460px, calc(100vw - 40px)); height: fit-content; padding: 32px; border: 0; border-radius: var(--panel-radius); background: var(--card); color: var(--text-color); }
-#logout-dialog[open] { display: grid; gap: 24px; }
-#logout-dialog::backdrop { background: #000b; }
-#logout-dialog h2 { font-size: 26px; padding-right: 36px; }
-#logout-dialog p { font-size: 22px; }
-#logout-dialog button { width: auto; height: auto; min-height: 48px; padding: 10px 20px; border: 0; background: transparent; color: var(--text-color); font-size: 22px; cursor: pointer; }
-#logout-dialog #cancel-logout { position: absolute; top: 8px; right: 8px; width: 48px; padding: 0; display: grid; place-items: center; }
-#logout-dialog #confirm-logout { justify-self: end; color: var(--primary-color); }
-#logout-error:empty { display: none; }
 #artwork-dialog {
   inset: 0; margin: auto; width: min(1000px, calc(100vw - 32px));
   height: calc(100dvh - 48px); max-height: calc(100dvh - 48px);
