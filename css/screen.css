@@ -150,49 +150,37 @@ body.playing-page { display: grid; grid-template-rows: minmax(0, 1fr) auto; padd
   .guide-manual .guide-header h1 { margin: 0; }
   .hint-result { padding: 12px; gap: 8px; }
 }
-/* Story-led visual treatment. No layout or copy changes. */
-body { isolation: isolate; background-color: var(--background-color); }
+/* Background-only gradients; controls and panels stay flat. */
+:root[data-theme] body { isolation: isolate; background: var(--background-color); }
 :root[data-theme="doll"] body {
-  background-image: radial-gradient(ellipse at 75% 15%, #7c4c2530, transparent 55%), radial-gradient(ellipse at 25% 85%, #661b2028, transparent 50%), linear-gradient(100deg, #140e0c, #271b15 52%, #100c0b);
+  background: radial-gradient(ellipse at 50% 25%, #39271b 0%, #211713 48%, #130e0c 100%);
 }
 :root[data-theme="hideout"] body {
-  background-image: radial-gradient(ellipse at 85% 25%, #40776c2b, transparent 60%), repeating-linear-gradient(0deg, #b1c2bc05 0 1px, transparent 1px 4px), linear-gradient(135deg, #0b1114, #1a2528 55%, #0b1114);
+  background: radial-gradient(ellipse at 50% 25%, #263a3b 0%, #172326 48%, #0d1315 100%);
 }
-:root[data-theme="doll"] .background-overlay { background: radial-gradient(ellipse at center, transparent 35%, #090504b8 100%); }
-:root[data-theme="hideout"] .background-overlay { background: radial-gradient(ellipse at center, transparent 30%, #03080bc4 100%); }
-:root[data-theme="doll"] :is([data-concept-title], .guide-header h1) { font-family: Georgia, 'Times New Roman', serif; color: #f0dcc0; text-shadow: 0 2px 1px #000, 0 8px 32px #000b; }
-:root[data-theme="hideout"] :is([data-concept-title], .guide-header h1) { font-family: 'Arial Black', 'Malgun Gothic', sans-serif; color: #e0e9e3; text-shadow: 2px 2px 0 #527a7140, 0 8px 32px #000b; }
-.concept-subtitle { color: var(--primary-color); text-shadow: 0 2px 8px #000; }
-.home-page .menu-button { border-radius: var(--panel-radius); border-color: var(--panel-edge); background: linear-gradient(165deg, var(--card), var(--background-color)); box-shadow: inset 0 1px 0 #ffffff12, 0 8px 24px #0004; }
-:root[data-theme="doll"] .home-page .menu-button { background-image: linear-gradient(165deg, #443023, #241915); border-color: #8c6945; }
-:root[data-theme="hideout"] .home-page .menu-button { background-image: linear-gradient(135deg, #324342, #172023); border-color: #587771; box-shadow: inset 0 1px 0 #c6eee31a, inset 0 -3px 0 #060b0d70, 0 8px 24px #0004; }
-.home-page #start-button { background: linear-gradient(135deg, var(--primary-color), var(--primary-color)); color: var(--background-color); border-color: var(--primary-color); box-shadow: inset 0 1px 0 #fff5, 0 8px 26px #0005; }
-:root[data-theme="doll"] .home-page #start-button { background: linear-gradient(115deg, #ddbd87, #b88c53); }
-:root[data-theme="hideout"] .home-page #start-button { background: linear-gradient(115deg, #93d3bf, #65ac9e); }
-:is(.playing-page .card, .input-card, .manual-steps li, .rec-card) { border: 1px solid var(--panel-edge); border-radius: var(--panel-radius); box-shadow: inset 0 1px 0 #fff1, 0 12px 30px #0003; background-color: var(--card); }
-:root[data-theme="doll"] :is(.playing-page .card, .input-card, .manual-steps li) { background-image: radial-gradient(ellipse at top left, #bf8b4d12, transparent 80%); box-shadow: inset 0 0 0 5px #160f0c55, 0 12px 30px #0005; }
-:root[data-theme="hideout"] :is(.playing-page .card, .input-card, .manual-steps li) { background-image: radial-gradient(circle at 10px 10px, #8a9f92 0 2px, transparent 3px), radial-gradient(circle at calc(100% - 10px) 10px, #8a9f92 0 2px, transparent 3px), linear-gradient(145deg, #ffffff05, transparent 60%); }
-.hint-result { border: 1px solid var(--panel-edge); border-radius: var(--panel-radius); background: var(--background-color); box-shadow: inset 0 2px 12px #0005; }
-:root[data-theme="doll"] .hint-result { border-left: 3px solid #985349; }
-:root[data-theme="hideout"] .hint-result { border-left: 3px solid #82c9bb; }
-:is(.field-input, .answer-row input, #ending-password) { border-color: var(--panel-edge); border-radius: var(--panel-radius); background: var(--background-color); color: var(--text-color); box-shadow: inset 0 2px 8px #0004; }
+.background-overlay { display: none; }
+:root[data-theme="doll"] :is([data-concept-title], .guide-header h1, .playing-page .time) { font-family: Georgia, 'Times New Roman', serif; color: #f0dcc0; text-shadow: none; }
+:root[data-theme="hideout"] :is([data-concept-title], .guide-header h1, .playing-page .time) { font-family: 'Arial Black', 'Malgun Gothic', sans-serif; color: #e0e9e3; text-shadow: none; }
+.concept-subtitle { color: var(--primary-color); text-shadow: none; }
+.home-page .menu-button { border: 0; border-radius: var(--panel-radius); background: var(--card); color: var(--text-color); box-shadow: none; }
+.home-page #start-button { background: var(--primary-color); color: var(--background-color); }
+:is(.playing-page .card, .input-card, .manual-steps li, .rec-card) { border: 0; border-radius: var(--panel-radius); background: var(--card); box-shadow: none; }
+.hint-result { border: 0; background: transparent; box-shadow: none; }
+:is(.field-input, .answer-row input, #ending-password) { border: 1px solid var(--panel-edge); border-radius: var(--panel-radius); background: var(--background-color); color: var(--text-color); box-shadow: none; }
 input::placeholder { color: var(--muted); opacity: .85; }
-:is(.play-tools button, .corner-home, #theme-toggle, .guide-tabs button, .guide-dialog-header button, .record-pagination button, .dialog-actions button) { background: linear-gradient(145deg, var(--card), var(--background-color)); border-color: var(--panel-edge); color: var(--text-color); box-shadow: inset 0 1px 0 #fff1, 0 4px 12px #0003; }
-:is(.play-tools button, .guide-tabs button, .guide-dialog-header button, .record-pagination button, .dialog-actions button) { border-radius: var(--panel-radius); }
-:is(.answer-row button, .btn-add, .hint-btn) { border-radius: var(--panel-radius); background: var(--primary-color); color: var(--background-color); box-shadow: inset 0 1px 0 #ffffff35, 0 4px 12px #0003; }
-.guide-tabs [aria-selected="true"] { background: var(--glow); border-color: var(--primary-color); color: var(--primary-color); }
-:is(#guide-dialog, #ending-dialog, .toast) { border-color: var(--panel-edge); border-radius: var(--panel-radius); background: var(--card); box-shadow: 0 24px 100px #000b; }
+:is(.play-tools button, .corner-home, #theme-toggle, .guide-dialog-header button, .record-pagination button, .dialog-actions button) { border: 0; background: var(--card); color: var(--text-color); box-shadow: none; }
+:is(.answer-row button, .btn-add, .hint-btn) { border: 0; border-radius: var(--panel-radius); background: var(--primary-color); color: var(--background-color); box-shadow: none; }
+:is(#guide-dialog, #ending-dialog, .toast) { border: 0; border-radius: var(--panel-radius); background: var(--card); box-shadow: none; }
 #guide-dialog::backdrop, #ending-dialog::backdrop { background: #030607d4; }
-.playing-page .time, .result-time { color: var(--primary-color); font-family: 'Courier New', monospace; text-shadow: 0 2px 8px #0008; }
-:root[data-theme="doll"] .playing-page .time { text-shadow: 0 0 24px #bd86452e, 0 3px 0 #0008; }
-:root[data-theme="hideout"] .playing-page .time { text-shadow: 0 0 24px #6bc8b02e, 0 3px 0 #0008; }
-.rec-card.r1 { border-left: 4px solid #d4b778; }
-.rec-card.r2 { border-left: 4px solid #a9b9b4; }
-.rec-card.r3 { border-left: 4px solid #ac795c; }
-.container .footer, .guide-footer { background: linear-gradient(180deg, transparent, var(--background-color) 75%); border-top-color: var(--panel-edge); }
+.playing-page .time, .result-time { color: var(--primary-color); font-family: 'Courier New', monospace; text-shadow: none; }
+.rec-card.r1, .rec-card.r2, .rec-card.r3 { border: 0; }
+.rec-card.r1 .rec-rank { color: #d4b778; }
+.rec-card.r2 .rec-rank { color: #a9b9b4; }
+.rec-card.r3 .rec-rank { color: #ac795c; }
+.container .footer, .guide-footer { background: transparent; border: 0; }
 @media (hover: hover) {
-  .home-page .menu-button:hover, .home-page #start-button:hover { border-color: var(--primary-color); box-shadow: inset 0 1px 0 #fff3, 0 8px 28px var(--glow); }
-  .play-tools button:hover, .record-pagination button:not(:disabled):hover, .guide-tabs button:hover { border-color: var(--primary-color); color: var(--primary-color); }
+  .home-page .menu-button:hover, .home-page #start-button:hover { box-shadow: none; }
+  .play-tools button:hover, .record-pagination button:not(:disabled):hover { color: var(--primary-color); }
 }
 @media (prefers-reduced-motion: reduce) { .home-page .menu-button { transition: none; } }
 /* Timer-led playing screen: header, central clock, lower hint panel. */
@@ -265,14 +253,14 @@ body.playing-page {
   background: transparent;
   background-image: none;
   border: 0;
-  border-top: 1px solid var(--panel-edge);
+  border-top: 0;
   border-radius: 0;
   box-shadow: none;
 }
 :root[data-theme] .playing-page .hint-card .hint-result {
   background: transparent;
   border: 0;
-  border-left: 2px solid var(--panel-edge);
+  border-left: 0;
   border-radius: 0;
   box-shadow: none;
 }
@@ -294,8 +282,8 @@ body.playing-page {
 #hint-dialog {
   margin: auto; width: min(680px, calc(100vw - 40px));
   max-height: calc(100dvh - 40px); padding: clamp(24px, 4vw, 40px);
-  border: 1px solid var(--panel-edge); border-radius: var(--panel-radius);
-  background: var(--card); color: var(--text-color); box-shadow: 0 24px 100px #0009;
+  border: 0; border-radius: var(--panel-radius);
+  background: var(--card); color: var(--text-color); box-shadow: none;
 }
 #hint-dialog[open] { display: grid; gap: 24px; }
 #hint-dialog::backdrop { background: #030607d4; }
@@ -322,7 +310,7 @@ body.playing-page {
 .guide-embedded .guide-page .guide-manual { grid-template-rows: minmax(0, 1fr); }
 .manual-columns { min-height: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--screen-gap); }
 .manual-columns .manual-panel { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 16px; }
-.manual-columns .manual-panel > h2 { margin: 0; padding: 12px 0; border-bottom: 1px solid var(--panel-edge); color: var(--primary-color); text-align: center; font-size: 26px; }
+.manual-columns .manual-panel > h2 { margin: 0; padding: 12px 0; border-bottom: 0; color: var(--primary-color); text-align: center; font-size: 26px; }
 .manual-columns .manual-steps { grid-template-columns: minmax(0, 1fr); grid-template-rows: repeat(4, minmax(0, 1fr)); gap: 12px; }
 :root[data-theme] .manual-columns .manual-steps li { padding: 10px 16px; background: none; border: 0; box-shadow: none; border-radius: 0; }
 .manual-columns h3 { font-size: 24px; line-height: 1.3; margin-bottom: 8px; }
@@ -331,4 +319,26 @@ body.playing-page {
   .manual-columns .manual-panel, .manual-columns .manual-steps { gap: 8px; }
   :root[data-theme] .manual-columns .manual-steps li { padding: 4px 10px; }
   .manual-columns h3 { font-size: 22px; margin-bottom: 4px; }
+}
+/* Plain help surfaces and unobtrusive top controls. */
+:root[data-theme] .play-tools :is(#open-guide, #open-ending) { background: transparent; border: 0; box-shadow: none; }
+:root[data-theme] body.guide-page { background: var(--background-color); }
+:root[data-theme] #guide-dialog { background: var(--background-color); }
+
+/* Register the completed run before revealing its leaderboard. */
+.ending-page .content { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); }
+#record-dialog {
+  inset: 0; margin: auto; width: min(560px, calc(100vw - 40px));
+  height: fit-content; max-height: calc(100dvh - 40px); padding: 0;
+  border: 0; border-radius: var(--panel-radius); background: var(--card); color: var(--text-color);
+}
+#record-dialog::backdrop { background: #080706f2; }
+#record-dialog .input-card {
+  display: flex; flex-direction: column; gap: 20px; padding: 32px;
+  width: 100%; margin: 0; border: 0; background: transparent; box-shadow: none;
+}
+#record-error { font-size: 20px; line-height: 1.4; }
+#record-error:empty { display: none; }
+@media (max-height: 650px) {
+  #record-dialog .input-card { gap: 12px; padding: 20px; }
 }

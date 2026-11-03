@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
     <link rel="stylesheet" href="./css/themes.css">
     <link rel="stylesheet" href="./css/screen.css">
+    <link rel="stylesheet" href="./css/keypad.css">
     <script src="js/theme.js"></script>
 </head>
 
@@ -28,19 +29,33 @@
         <p class="concept-subtitle" data-concept-subtitle></p>
     </header>
 
-    <div class="time" id="timer">00:00</div>
+    <div class="timer-stage">
+    <section class="timer-dial" aria-label="경과 시간">
+        <svg class="timer-ring" viewBox="0 0 240 240" aria-hidden="true">
+            <path class="ring-track" d="M49.3 190.7a100 100 0 1 1 141.4 0" />
+            <path id="timer-progress" class="ring-light" d="M49.3 190.7a100 100 0 1 1 141.4 0" pathLength="100" stroke-dashoffset="100" opacity="0" />
+        </svg>
+        <div class="dial-copy"><div class="time" id="timer">00:00</div><p class="hint-count" id="hint-count">0 / 5</p></div>
+    </section>
+    </div>
 
     <div class="content">
         <section class="card hint-card" aria-labelledby="key-title">
-            <h2 id="key-title">힌트 찾기</h2>
+            <h2 id="key-title">힌트 코드</h2>
             <form id="key-form">
-                <label for="problem-key">문제 키</label>
-                <div class="answer-row">
-                    <input id="problem-key" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="32" required placeholder="키 입력">
-                    <button type="submit">힌트 확인</button>
+                <div class="code-controls">
+                <div class="code-entry">
+                    <div class="code-slots" aria-hidden="true"><span id="code-slot-0"></span><span id="code-slot-1"></span><span id="code-slot-2"></span></div>
+                    <input id="problem-key" aria-label="숫자 세 자리 힌트 코드" type="text" inputmode="none" pattern="[0-9]{3}" autocomplete="off" spellcheck="false" maxlength="3" required>
+                </div>
+                </div>
+                <div class="number-pad" aria-label="힌트 코드 키패드">
+                    <button type="button" data-digit="1">1</button><button type="button" data-digit="2">2</button><button type="button" data-digit="3">3</button>
+                    <button type="button" data-digit="4">4</button><button type="button" data-digit="5">5</button><button type="button" data-digit="6">6</button>
+                    <button type="button" data-digit="7">7</button><button type="button" data-digit="8">8</button><button type="button" data-digit="9">9</button>
+                    <button type="submit" class="key-confirm" aria-label="힌트 확인">확인</button><button type="button" data-digit="0">0</button><button type="button" id="code-backspace" aria-label="한 글자 지우기">⌫</button>
                 </div>
             </form>
-            <p class="feedback">첫 조회 +10분 · 다시 보기 무료</p>
             <p id="key-error" class="feedback" role="status"></p>
         </section>
     </div>
@@ -48,12 +63,16 @@
 
 </div>
 
-<div class="play-tools"><button type="button" id="open-guide">게임 방법</button><button type="button" id="open-ending" aria-label="엔딩 바로가기" title="엔딩 바로가기">→</button></div>
-<dialog id="hint-dialog" aria-labelledby="hint-title" aria-describedby="hint-text key-feedback">
+<div class="play-tools"><button type="button" id="open-guide">ⓘ 사용 방법</button><button type="button" id="open-ending" aria-label="엔딩 바로가기" title="엔딩 바로가기">→</button></div>
+<dialog id="hint-dialog" aria-labelledby="hint-title" aria-describedby="hint-text">
+    <button type="button" id="close-hint" aria-label="힌트 닫기" autofocus><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
     <h2 id="hint-title">힌트</h2>
-    <p id="hint-text"></p>
-    <p id="key-feedback" class="feedback"></p>
-    <button type="button" id="close-hint" autofocus>닫기</button>
+    <p id="hint-text" aria-live="polite"></p>
+    <nav class="hint-navigation" aria-label="힌트 단계">
+        <button type="button" id="previous-hint" aria-label="이전 힌트">← 이전</button>
+        <span id="hint-page" aria-live="polite">1 / 3</span>
+        <button type="button" id="next-hint" aria-label="더 자세한 힌트">다음 →</button>
+    </nav>
 </dialog>
 <dialog id="guide-dialog" aria-labelledby="guide-dialog-title">
     <header class="guide-dialog-header"><h2 id="guide-dialog-title">게임 방법</h2><button type="button" id="close-guide" aria-label="게임 방법 닫기">닫기</button></header>
@@ -61,8 +80,8 @@
 </dialog>
 <dialog id="ending-dialog" aria-labelledby="ending-dialog-title">
     <form id="ending-password-form">
-        <h2 id="ending-dialog-title">엔딩 바로가기</h2>
-        <p>비밀번호를 입력하면 현재 시간으로 게임을 종료합니다.</p>
+        <h2 id="ending-dialog-title">탈출</h2>
+        <p>탈출 비밀번호를 입력하세요.</p>
         <label for="ending-password">비밀번호</label>
         <input id="ending-password" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" required>
         <p id="ending-error" role="status"></p>
@@ -75,6 +94,7 @@
 
 <script src="js/time.js"></script>
 <script src="js/problem.js"></script>
+<script src="js/keypad.js"></script>
 <script src="js/ending-shortcut.js"></script>
 <script src="js/guide-dialog.js"></script>
 

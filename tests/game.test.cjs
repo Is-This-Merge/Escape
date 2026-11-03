@@ -30,7 +30,7 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(s.run('EscapeGame.run.penalty'), 0);
     const lastKey = s.run('problems[4].key');
     s.submit('  ' + lastKey.toLowerCase() + '  ');
-    assert.equal(s.el('hint-text').textContent, s.run('problems[4].hint'));
+    assert.equal(s.el('hint-text').textContent, s.run('problems[4].hints[0]'));
     assert.equal(s.el('hint-dialog').open, true);
     assert.equal(s.el('key-error').textContent, '');
     assert.equal(s.run('EscapeGame.run.penalty'), 600);
@@ -70,6 +70,68 @@ test('direct ending visit cannot submit a completion', () => {
   const s = setup('doll'); s.file('app.js'); assert.equal(s.el('save-record').disabled, true);
   s.el('record-form').handlers.submit({ preventDefault() {} }); assert.equal(s.storage.size, 0);
 });
+test('90-minute gauge fills, includes hint penalties, and caps at full', () => {
+  const s = setup('doll'); s.file('time.js');
+  s.run('EscapeGame.run.startedAt = 1000; EscapeGame.run.finishedAt = 1000; EscapeGame.update()');
+  assert.equal(s.el('timer-progress')['stroke-dashoffset'], '100');
+  assert.equal(s.el('timer-progress').opacity, '0');
+  s.run('EscapeGame.run.finishedAt = 2701000; EscapeGame.update()');
+  assert.equal(s.el('timer-progress')['stroke-dashoffset'], '50');
+  assert.equal(s.el('timer').textContent, '45:00');
+  s.run('EscapeGame.run.penalty = 600; EscapeGame.update()');
+  assert.ok(Math.abs(Number(s.el('timer-progress')['stroke-dashoffset']) - 100 * (1 - 55 / 90)) < .001);
+  s.run('EscapeGame.run.finishedAt = 4801000; EscapeGame.update()');
+  assert.equal(s.el('timer').textContent, '90:00');
+  assert.equal(s.el('timer-progress')['stroke-dashoffset'], '0');
+  s.run('EscapeGame.run.finishedAt = 6001000; EscapeGame.update()');
+  assert.equal(s.el('timer-progress')['stroke-dashoffset'], '0');
+});
+test('same numeric key returns only the active concept hint', () => {
+  const doll = setup('doll'); doll.file('time.js'); doll.file('problem.js');
+  const hideout = setup('hideout'); hideout.file('time.js'); hideout.file('problem.js');
+  // Shared-key fixture checks concept isolation independently of production keys.
+  doll.run("problems[0].key = '001'"); hideout.run("problems[0].key = '001'");
+  doll.submit('001'); hideout.submit('001');
+  assert.equal(doll.el('hint-title').textContent, '닫힌 인형 상자');
+  assert.equal(hideout.el('hint-title').textContent, '은신처 입구');
+  assert.notEqual(doll.el('hint-text').textContent, hideout.el('hint-text').textContent);
+  doll.context.EscapeTheme.current = 'hideout';
+  doll.submit('002');
+  assert.equal(doll.run('EscapeGame.run.penalty'), 600);
+  assert.ok(doll.el('key-error').textContent.includes('컨셉'));
+  assert.equal(doll.el('hint-title').textContent, '닫힌 인형 상자');
+});
+for (const concept of ['doll', 'hideout']) {
+  test(concept + ': keypad uses only explicitly entered characters', () => {
+    const s = setup(concept); s.file('time.js'); s.file('problem.js');
+    s.run("problems[0].key = '001'");
+    const keys = Array.from('0123456789', digit => {
+      const button = s.el('pad-' + digit); button.dataset = { digit }; return button;
+    });
+    s.context.document.querySelectorAll = () => keys;
+    s.file('keypad.js');
+    assert.equal(s.el('problem-key').value, '');
+    s.el('pad-0').handlers.click();
+    assert.equal(s.el('problem-key').value, '0');
+    assert.equal(s.el('code-slot-0').textContent, '0');
+    s.el('code-backspace').handlers.click();
+    assert.equal(s.el('problem-key').value, '');
+    for (const key of '001') s.el('pad-' + key).handlers.click();
+    assert.equal(s.el('problem-key').value, '001');
+    s.el('pad-2').handlers.click();
+    assert.equal(s.el('problem-key').value, '001');
+    assert.equal(s.el('code-slot-2').textContent, '1');
+    s.el('key-form').handlers.submit({ preventDefault() {} });
+    assert.equal(s.el('hint-dialog').open, true);
+    assert.equal(s.run('EscapeGame.run.penalty'), 600);
+    s.el('code-backspace').handlers.click();
+    assert.equal(s.el('code-slot-2').textContent, '');
+    s.el('problem-key').value = 'h002';
+    s.el('problem-key').handlers.input();
+    assert.equal(s.el('problem-key').value, '002');
+    assert.equal(s.el('code-slot-0').textContent, '0');
+  });
+}
 test('home leaderboard hides result even with a finished run and cannot submit', () => {
   const s = setup('doll', new Map(), '?view=leaderboard');
   s.storage.set('escape_run_doll', JSON.stringify({ id: 'finished', concept: 'doll', solved: 5, startedAt: 1000, finishedAt: 61000, penalty: 0 }));
@@ -177,3 +239,65 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(s.storage.get('escape_records_' + concept), 'saved-records');
   });
 }
+
+for (const concept of ['doll', 'hideout']) {
+  test(concept + ': progressive hints navigate without extra penalties and reset per puzzle', () => {
+    const s = setup(concept); s.file('time.js'); s.file('problem.js');
+    s.submit(s.run('problems[0].key'));
+    assert.equal(s.el('hint-page').textContent, '1 / 3');
+    assert.equal(s.el('previous-hint').disabled, true);
+    const first = s.el('hint-text').textContent;
+    s.el('next-hint').handlers.click();
+    assert.equal(s.el('hint-page').textContent, '2 / 3');
+    assert.notEqual(s.el('hint-text').textContent, first);
+    s.el('hint-text').handlers.touchstart({ touches: [{ clientX: 200, clientY: 100 }] });
+    s.el('hint-text').handlers.touchend({ changedTouches: [{ clientX: 100, clientY: 105 }] });
+    assert.equal(s.el('hint-page').textContent, '3 / 3');
+    assert.equal(s.el('next-hint').disabled, true);
+    s.el('next-hint').handlers.click();
+    assert.equal(s.el('hint-page').textContent, '3 / 3');
+    s.el('hint-dialog').handlers.keydown({ key: 'ArrowLeft', preventDefault() {} });
+    assert.equal(s.el('hint-page').textContent, '2 / 3');
+    assert.equal(s.run('EscapeGame.run.penalty'), 600);
+    s.submit(s.run('problems[0].key'));
+    assert.equal(s.el('hint-page').textContent, '1 / 3');
+    assert.equal(s.run('EscapeGame.run.penalty'), 600);
+    s.submit(s.run('problems[1].key'));
+    assert.equal(s.el('hint-page').textContent, '1 / 3');
+    assert.equal(s.el('hint-text').textContent, s.run('problems[1].hints[0]'));
+    assert.equal(s.run('EscapeGame.run.penalty'), 1200);
+  });
+}
+
+test('result modal gates leaderboard until successful registration, including reload and save errors', () => {
+  const storage = new Map([['escape_run_doll', JSON.stringify({
+    id: 'modal-run', concept: 'doll', solved: 5, startedAt: 1000, finishedAt: 61000, penalty: 600
+  })]]);
+  let s = setup('doll', storage); s.file('app.js');
+  assert.equal(s.el('record-dialog').open, true);
+  assert.equal(s.el('leaderboard').hidden, true);
+  assert.equal(s.el('records-list').children.length, 0);
+  let prevented = false;
+  s.el('record-dialog').handlers.cancel({ preventDefault() { prevented = true; } });
+  assert.equal(prevented, true);
+  s = setup('doll', storage); s.file('app.js');
+  assert.equal(s.el('record-dialog').open, true);
+  s.el('inp-nick').value = 'Player';
+  const save = s.context.localStorage.setItem;
+  s.context.localStorage.setItem = () => { throw new Error('Storage full'); };
+  s.el('record-form').handlers.submit({ preventDefault() {} });
+  assert.equal(s.el('record-dialog').open, true);
+  assert.equal(s.el('leaderboard').hidden, true);
+  assert.ok(s.el('record-error').textContent);
+  s.context.localStorage.setItem = save;
+  s.el('record-form').handlers.submit({ preventDefault() {} });
+  assert.equal(s.el('record-dialog').open, false);
+  assert.equal(s.el('leaderboard').hidden, false);
+  assert.equal(s.el('records-list').children.length, 1);
+  const reload = setup('doll', storage); reload.file('app.js');
+  assert.notEqual(reload.el('record-dialog').open, true);
+  assert.equal(reload.el('leaderboard').hidden, false);
+  const home = setup('doll', new Map(), '?view=leaderboard'); home.file('app.js');
+  assert.notEqual(home.el('record-dialog').open, true);
+  assert.equal(home.el('leaderboard').hidden, false);
+});

@@ -9,6 +9,11 @@ const validCompletion = completedRun?.concept === concept && completedRun?.solve
 const totalSec = validCompletion ? Math.floor((completedRun.finishedAt - completedRun.startedAt) / 1000) + completedRun.penalty : null;
 const showResult = new URLSearchParams(location.search).get('view') === 'result' && validCompletion;
 document.getElementById('record-form').hidden = !showResult;
+const recordDialog = document.getElementById('record-dialog');
+recordDialog.addEventListener('cancel', event => event.preventDefault());
+function registrationPending() {
+  return showResult && !loadRecords(concept).some(record => record.id === completedRun.id);
+}
 function loadRecords(id) {
   try {
     const records = JSON.parse(localStorage.getItem('escape_records_' + id));
@@ -19,11 +24,13 @@ function formatTime(seconds) {
   return String(Math.floor(seconds / 60)).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0');
 }
 function showToast(message) {
+  document.getElementById('record-error').textContent = recordDialog.open ? message : '';
   const toast = document.getElementById('toast');
   toast.textContent = message; toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 3000);
 }
 function renderRecords() {
+  if (registrationPending()) return;
   const records = loadRecords(concept);
   document.getElementById('rec-count').textContent = records.length + '명';
   const list = document.getElementById('records-list');
@@ -49,6 +56,11 @@ function renderRecords() {
 }
 function updateCompletion() {
   const saved = validCompletion && loadRecords(concept).some(r => r.id === completedRun.id);
+  const pending = showResult && !saved;
+  document.getElementById('leaderboard').hidden = pending;
+  document.getElementById('record-form').hidden = !pending;
+  if (pending && !recordDialog.open) recordDialog.showModal();
+  if (!pending && recordDialog.open) recordDialog.close();
   document.getElementById('result-time').textContent = validCompletion ? formatTime(totalSec) : '--:--';
   document.getElementById('completion-message').textContent = !validCompletion ? '문제 5개를 모두 해결하면 탈출 시간을 등록할 수 있습니다.' : saved ? '등록이 완료된 탈출 기록입니다.' : '탈출 성공! 닉네임을 입력해 기록을 남겨주세요.';
   document.getElementById('save-record').disabled = !validCompletion || saved;
@@ -57,6 +69,7 @@ function updateCompletion() {
 }
 document.getElementById('record-form').addEventListener('submit', event => {
   event.preventDefault();
+  document.getElementById('record-error').textContent = '';
   if (!showResult) return;
   const nick = document.getElementById('inp-nick').value.trim();
   if (!nick || nick.length > 12) { showToast('닉네임을 1~12자로 입력하세요.'); return; }

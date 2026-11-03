@@ -1,0 +1,27 @@
+﻿/* Artwork viewer; the home page retains its original layout. */
+#open-artwork {
+  position: fixed; top: max(20px, env(safe-area-inset-top)); right: 24px;
+  width: auto; height: auto; min-height: 48px; padding: 8px 16px;
+  background: transparent; border: 0; color: var(--text-color); font-size: 22px;
+}
+#artwork-dialog {
+  inset: 0; margin: auto; width: min(1000px, calc(100vw - 32px));
+  height: calc(100dvh - 48px); max-height: calc(100dvh - 48px);
+  max-width: calc(100vw - 32px); padding: 20px;
+  background: var(--background-color); color: var(--text-color);
+  border: 0; overflow: hidden;
+}
+#artwork-dialog[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 16px; }
+#artwork-dialog::backdrop { background: #000d; }
+.artwork-header, .artwork-navigation { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.artwork-header h2 { font-size: 24px; }
+#artwork-dialog button {
+  width: auto; height: auto; min-height: 48px; padding: 8px 20px;
+  background: transparent; color: var(--text-color); border: 0; font-size: 22px;
+}
+.artwork-image { min-width: 0; min-height: 0; }
+.artwork-image img { display: block; width: 100%; height: 100%; object-fit: contain; }
+#artwork-page { font-size: 22px; }
+@media (max-height: 600px) {
+  #artwork-dialog { padding: 12px; gap: 8px; }
+}

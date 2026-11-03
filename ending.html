@@ -20,12 +20,13 @@
   <div class="header" id="title" data-concept-title>The Escape</div>
   <p class="concept-subtitle" data-concept-subtitle></p>
   <div class="content">
+    <dialog id="record-dialog" aria-labelledby="record-title" aria-describedby="completion-message">
     <form class="input-card" id="record-form" hidden>
-      <h2>탈출 기록</h2>
+      <h2 id="record-title">탈출 기록</h2>
       <p id="completion-message" role="status"></p>
       <div class="field">
         <label class="field-label" for="inp-nick">닉네임</label>
-        <input class="field-input" id="inp-nick" type="text" placeholder="예: 탈출왕" maxlength="12" required>
+        <input class="field-input" id="inp-nick" type="text" placeholder="예: 탈출왕" maxlength="12" required autofocus>
       </div>
       <div class="field">
         <span class="field-label">최종 기록 시간</span>
@@ -33,10 +34,12 @@
         <p class="time-hint" id="penalty-note">힌트 사용 시 문제당 10분이 포함됩니다.</p>
       </div>
       <button class="btn-add" id="save-record" type="submit">기록 등록</button>
+      <p id="record-error" role="alert"></p>
     </form>
-    <section class="records-container" aria-labelledby="leaderboard-title">
+    </dialog>
+    <section class="records-container" id="leaderboard" aria-labelledby="leaderboard-title" hidden>
       <div class="sec-label">
-        <h2 id="leaderboard-title">리더보드</h2>
+        <h2 id="leaderboard-title"></h2>
         <span id="rec-count">0명</span>
       </div>
       <div class="records" id="records-list" aria-live="polite"></div>

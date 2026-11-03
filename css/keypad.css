@@ -1,0 +1,76 @@
+/* Reference-inspired play controls. The timer remains an elapsed-time counter. */
+body.playing-page { padding: 22px 28px 72px; }
+.playing-page > .container {
+  max-width: 1240px; grid-template-areas: "heading" "clock" "hints";
+  grid-template-rows: auto minmax(120px, 1fr) auto; gap: 14px;
+}
+.playing-page .play-heading { gap: 5px; }
+.playing-page h1 { font-size: clamp(24px, 3.5vh, 38px); }
+.playing-page .concept-subtitle { font-size: 18px; }
+.timer-stage { grid-area: clock; min-width: 0; min-height: 0; align-self: stretch; justify-self: stretch; display: grid; place-items: center; container-type: size; }
+.timer-dial { position: relative; width: min(100cqw, 100cqh, 520px); aspect-ratio: 1; }
+.timer-stage > .timer-dial { justify-self: center; align-self: center; }
+.timer-ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: none; stroke-width: 4; stroke-linecap: round; }
+.ring-track { stroke: var(--muted); opacity: .25; }
+.ring-light { stroke: var(--text-color); stroke-dasharray: 100 100; transition: stroke-dashoffset .5s linear; }
+.dial-copy { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px; }
+.playing-page .time { font-size: clamp(46px, 7vh, 76px); letter-spacing: .02em; }
+.hint-count { font-size: 20px; color: var(--muted); }
+#hint-dialog[open] { grid-template-rows: repeat(3, auto); }
+#hint-dialog #hint-title { padding-right: 48px; }
+#hint-dialog #close-hint {
+  position: absolute; top: 8px; right: 8px; display: grid; place-items: center;
+  width: 48px; height: 48px; min-width: 48px; min-height: 48px; padding: 0;
+  border: 0; background: transparent; color: var(--text-color); box-shadow: none;
+}
+#hint-dialog #hint-text { min-height: 7em; touch-action: pan-y; }
+.hint-navigation { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.hint-navigation button { min-height: 48px; padding: 8px 12px; border: 0; background: transparent; color: var(--text-color); font-size: 22px; }
+#hint-page { flex-shrink: 0; font-size: 20px; color: var(--muted); }
+@media (max-height: 650px) {
+  #hint-dialog[open] { gap: 12px; padding: 20px; }
+  #hint-dialog #hint-text { font-size: 22px; line-height: 1.5; min-height: 6em; }
+}
+.playing-page .content { justify-content: center; }
+:root[data-theme] .playing-page .hint-card { width: min(400px, 100%); padding: 0; gap: 10px; border: 0; background: none; }
+.playing-page .hint-card h2 { font-size: 22px; font-weight: 500; letter-spacing: .1em; }
+.playing-page #key-form { width: 100%; display: grid; gap: 14px; }
+.code-controls { display: grid; grid-template-columns: minmax(0, 250px); align-items: center; justify-content: center; }
+.code-entry { position: relative; width: 100%; height: 64px; margin: 0 auto; }
+.code-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; height: 100%; }
+.code-slots span { display: grid; place-items: center; border: 2px solid var(--muted); border-radius: 10px; font-size: 30px; font-weight: 700; }
+.code-entry:focus-within .code-slots span { border-color: var(--primary-color); }
+.playing-page #problem-key { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; border: 0; opacity: 0; font-size: 24px; cursor: text; }
+.number-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 20px; }
+.number-pad button { height: clamp(46px, 6vh, 62px); min-height: 44px; padding: 0; border: 0; border-radius: 10px; background: transparent; color: var(--text-color); font-size: 28px; font-weight: 700; cursor: pointer; }
+.number-pad .key-confirm { font-size: 20px; color: var(--primary-color); }
+.number-pad button:active { background: var(--glow); }
+@media (prefers-reduced-motion: reduce) { .ring-light { transition: none; } }
+.playing-page .hint-card .feedback { font-size: 18px; line-height: 1.4; }
+.playing-page #key-error { height: 2.8em; }
+.playing-page .play-tools { inset: auto 28px 18px auto; }
+.playing-page .play-tools #open-guide { font-size: 18px; padding: 8px 12px; }
+.playing-page .play-tools #open-ending { position: fixed; top: 16px; right: 24px; font-size: 24px; padding: 8px 16px; }
+.playing-page .container .footer { width: auto; right: auto; left: 28px; bottom: 22px; padding: 0; font-size: 12px; }
+@media (orientation: landscape) and (min-width: 900px) {
+  body.playing-page { padding-top: 36px; }
+  .playing-page > .container { grid-template-columns: 1fr 1fr; grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "heading heading" "clock hints"; gap: 24px 64px; }
+  .playing-page .content { align-self: center; }
+  .playing-page .time { font-size: clamp(64px, 6vw, 90px); }
+  .number-pad button { height: clamp(48px, 7vh, 72px); }
+}
+@media (pointer: coarse), (hover: none) {
+  .playing-page .hint-card .feedback, .hint-count { font-size: 22px; }
+  .playing-page .play-tools #open-guide { font-size: 22px; }
+  .playing-page .container .footer { font-size: 16px; }
+}
+@media (max-width: 600px) {
+  body.playing-page { padding: 18px 20px 78px; }
+  .playing-page > .container { gap: 8px; }
+  .playing-page .play-heading { display: none; }
+  .playing-page > .container { grid-template-rows: minmax(150px, 1fr) auto; grid-template-areas: "clock" "hints"; }
+  .playing-page .hint-card .feedback, .hint-count { font-size: 16px; }
+  .playing-page .container .footer { font-size: 10px; left: 16px; }
+  .playing-page .play-tools { right: 16px; }
+  .playing-page .play-tools #open-guide { font-size: 18px; }
+}

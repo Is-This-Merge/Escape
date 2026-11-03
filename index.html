@@ -9,6 +9,7 @@
     <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
     <link rel="stylesheet" href="./css/themes.css">
     <link rel="stylesheet" href="./css/screen.css">
+    <link rel="stylesheet" href="./css/artwork.css">
     <script src="js/theme.js"></script>
 </head>
 <body class="home-page">
@@ -28,7 +29,21 @@
 
     </div>
 
+    <button type="button" id="open-artwork" aria-haspopup="dialog">포스터 보기</button>
+    <dialog id="artwork-dialog" aria-labelledby="artwork-title">
+        <header class="artwork-header">
+            <h2 id="artwork-title">포스터</h2>
+            <button type="button" id="close-artwork" autofocus>닫기</button>
+        </header>
+        <div class="artwork-image"><img id="artwork-image" alt=""></div>
+        <nav class="artwork-navigation" aria-label="포스터 탐색">
+            <button type="button" id="previous-artwork">이전</button>
+            <span id="artwork-page" aria-live="polite"></span>
+            <button type="button" id="next-artwork">다음</button>
+        </nav>
+    </dialog>
     <script src="js/index.js"></script>
+    <script src="js/artwork.js"></script>
     
 <button type="button" id="theme-toggle" aria-label="디자인 컨셉 전환">
     <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
