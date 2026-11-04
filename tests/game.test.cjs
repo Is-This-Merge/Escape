@@ -81,7 +81,7 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(end.el('records-list').children[0].children[1].children[0].textContent, '<test>');
     const otherBoard = setup(concept === 'doll' ? 'hideout' : 'doll', s.storage);
     otherBoard.file('app.js'); await otherBoard.run('EscapeLeaderboard.ready');
-    assert.equal(otherBoard.el('rec-count').textContent, '0명');
+    assert.equal(otherBoard.el('records-list').children.length, 0);
     const reload = setup(concept, s.storage); reload.file('app.js'); await reload.run('EscapeLeaderboard.ready'); assert.equal(reload.el('save-record').disabled, true);
   });
 }

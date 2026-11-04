@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./css/screen.css">
     <link rel="stylesheet" href="./css/keypad.css">
     <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/press.css">
 </head>
 
 <body class="playing-page">
@@ -50,44 +51,41 @@
                 </div>
                 </div>
                 <div class="number-pad" aria-label="힌트 코드 키패드">
-                    <button type="button" data-digit="1">1</button><button type="button" data-digit="2">2</button><button type="button" data-digit="3">3</button>
-                    <button type="button" data-digit="4">4</button><button type="button" data-digit="5">5</button><button type="button" data-digit="6">6</button>
-                    <button type="button" data-digit="7">7</button><button type="button" data-digit="8">8</button><button type="button" data-digit="9">9</button>
-                    <button type="submit" class="key-confirm" aria-label="힌트 확인">확인</button><button type="button" data-digit="0">0</button><button type="button" id="code-backspace" aria-label="한 글자 지우기">⌫</button>
+                    <button type="button" data-digit="1" data-press="squircle">1</button><button type="button" data-digit="2" data-press="squircle">2</button><button type="button" data-digit="3" data-press="squircle">3</button>
+                    <button type="button" data-digit="4" data-press="squircle">4</button><button type="button" data-digit="5" data-press="squircle">5</button><button type="button" data-digit="6" data-press="squircle">6</button>
+                    <button type="button" data-digit="7" data-press="squircle">7</button><button type="button" data-digit="8" data-press="squircle">8</button><button type="button" data-digit="9" data-press="squircle">9</button>
+                    <button type="submit" class="key-confirm" aria-label="힌트 확인" data-press="squircle">확인</button><button type="button" data-digit="0" data-press="squircle">0</button><button type="button" id="code-backspace" aria-label="한 글자 지우기" data-press="squircle">⌫</button>
                 </div>
             </form>
             <p id="key-error" class="feedback" role="status"></p>
         </section>
     </div>
-    <footer class="footer"><p>&copy; 2026 NULL. all rights reserved.</p></footer>
+    <footer class="footer"><p>&copy; 2026 NULL & s0sCoD3. all rights reserved.</p></footer>
 
 </div>
 
-<div class="play-tools"><button type="button" id="open-guide">ⓘ 사용 방법</button><button type="button" id="open-ending" aria-label="엔딩 바로가기" title="엔딩 바로가기">→</button></div>
+<div class="play-tools"><button type="button" id="open-guide" data-press="squircle">ⓘ 사용 방법</button><button type="button" id="open-ending" aria-label="엔딩 바로가기" title="엔딩 바로가기" data-press="round">→</button></div>
 <dialog id="hint-dialog" aria-labelledby="hint-title" aria-describedby="hint-text">
-    <button type="button" id="close-hint" aria-label="힌트 닫기" autofocus><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+    <button type="button" id="close-hint" aria-label="힌트 닫기" autofocus data-press="round"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
     <h2 id="hint-title">힌트</h2>
     <p id="hint-text" aria-live="polite"></p>
     <nav class="hint-navigation" aria-label="힌트 단계">
-        <button type="button" id="previous-hint" aria-label="이전 힌트">← 이전</button>
+        <button type="button" id="previous-hint" aria-label="이전 힌트" data-press="squircle">← 이전</button>
         <span id="hint-page" aria-live="polite">1 / 3</span>
-        <button type="button" id="next-hint" aria-label="더 자세한 힌트">다음 →</button>
+        <button type="button" id="next-hint" aria-label="더 자세한 힌트" data-press="squircle">다음 →</button>
     </nav>
 </dialog>
 <dialog id="guide-dialog" aria-labelledby="guide-dialog-title">
-    <header class="guide-dialog-header"><h2 id="guide-dialog-title">게임 방법</h2><button type="button" id="close-guide" aria-label="게임 방법 닫기">닫기</button></header>
+    <header class="guide-dialog-header"><h2 id="guide-dialog-title">사용 방법</h2><button type="button" id="close-guide" aria-label="사용 방법 닫기" data-press="round"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></header>
     <iframe id="guide-frame" title="사이트 및 자물쇠 이용 방법" src="guide.html?embed=1"></iframe>
 </dialog>
-<dialog id="ending-dialog" aria-labelledby="ending-dialog-title">
+<dialog id="ending-dialog" aria-label="탈출 비밀번호 입력">
     <form id="ending-password-form">
-        <h2 id="ending-dialog-title">탈출</h2>
-        <p>탈출 비밀번호를 입력하세요.</p>
-        <label for="ending-password">비밀번호</label>
-        <input id="ending-password" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" required>
+        <input id="ending-password" type="text" inputmode="numeric" placeholder="탈출 비밀번호" aria-label="비밀번호" autocomplete="off" spellcheck="false" required>
         <p id="ending-error" role="status"></p>
         <div class="dialog-actions">
-            <button type="button" id="cancel-ending">취소</button>
-            <button type="submit">확인</button>
+            <button type="button" id="cancel-ending" data-press="squircle">취소</button>
+            <button type="submit" data-press="squircle">확인</button>
         </div>
     </form>
 </dialog>

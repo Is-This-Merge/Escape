@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How To Play</title>
+    <title>사용 방법</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/guide.css">
     <link rel="stylesheet" href="./css/themes.css">
@@ -11,32 +11,33 @@
     <link rel="icon" href="./img/favicon.ico">
     <script src="js/theme.js"></script>
     <script>if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.classList.add('guide-embedded');</script>
+    <link rel="stylesheet" href="css/press.css">
 </head>
 <body class="guide-page">
-    <a class="corner-home" href="index.html" aria-label="홈 화면으로 돌아가기" title="홈 화면으로 돌아가기">
+    <a class="corner-home" href="index.html" aria-label="홈 화면으로 돌아가기" title="홈 화면으로 돌아가기" data-press="round">
         <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 10 9-7 9 7M5 9v12h14V9M9 21v-8h6v8" /></svg>
     </a>
     <main class="guide-container guide-manual">
-        <header class="guide-header"><h1>HOW TO PLAY</h1></header>
+        <header class="guide-header"><h1>사용 방법</h1></header>
         <div class="manual-columns">
         <section id="site-guide" class="manual-panel" aria-labelledby="site-heading">
             <h2 id="site-heading">태블릿 이용 방법</h2>
             <ol class="manual-steps">
-                <li><h3>힌트 확인</h3><p>문제지의 힌트 코드를 입력해 단계별 힌트를 확인할 수 있습니다. 힌트 조회시 문제당 10분이 추가됩니다.</p></li>
-                <li><h3>순위표</h3><p>태블릿에 탈출 비밀번호를 입력한 시점을 기준으로 시간이 기록됩니다. 이는 순위표에 반영됩니다.</p></li>
+                <li><h3>힌트 확인</h3><p>문제지의 코드를 입력해 힌트를 확인하세요. 문제당 첫 조회에 10분이 추가됩니다.</p></li>
+                <li><h3>순위표</h3><p>탈출 비밀번호를 입력하면 시간이 확정됩니다. 닉네임을 등록하면 순위표에 반영됩니다.</p></li>
             </ol>
         </section>
         <section id="lock-guide" class="manual-panel" aria-labelledby="lock-heading">
             <h2 id="lock-heading">소품 이용 방법</h2>
             <ol class="manual-steps">
                 <li><h3>숫자/문자 자물쇠</h3><p>조합을 표시선에 맞추세요.</p></li>
-                <li><h3>방향 자물쇠</h3><p>자물쇠를 강하게 눌러 초기화할 수 있습니다. 이후 순서대로 방향을 입력하세요.</p></li>
-                <li><h3>손전등</h3><p>한 번 눌러 키고, 다시 눌러 끌 수 있습니다.</p></li>
-                <li><p>문제 발생 시 진행자에게 알려주세요.</p></li>
+                <li><h3>방향 자물쇠</h3><p>강하게 눌러 초기화한 뒤, 순서대로 방향을 입력하세요.</p></li>
+                <li><h3>손전등</h3><p>한 번 누르면 켜지고, 다시 누르면 꺼집니다.</p></li>
             </ol>
         </section>
         </div>
-        <footer class="guide-footer"><p>&copy; 2026 NULL. all rights reserved.</p></footer>
+        <p class="manual-notice">문제 발생 시 진행자에게 알려주세요.</p>
+        <footer class="guide-footer"><p>&copy; 2026 NULL & s0sCoD3. all rights reserved.</p></footer>
     </main>
     <script src="js/guide.js"></script>
 </body>

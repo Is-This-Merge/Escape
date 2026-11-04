@@ -81,10 +81,8 @@ button {
 }
 
 button:hover {
-    transform: translateY(-3px);
-
-    box-shadow:
-        0 0 20px rgba(52,152,219,.5);
+    transform: scale(1.03);
+    box-shadow: none;
 }
 
 .footer {
@@ -118,9 +116,7 @@ button:hover {
 }
 
 #start-button:hover {
-    filter: brightness(1.1);
-
-    transform: translateY(-4px) scale(1.02);
+    transform: scale(1.02);
 }
 
 @keyframes blink {

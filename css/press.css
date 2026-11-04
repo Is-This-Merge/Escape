@@ -1,0 +1,38 @@
+/* Keep the press layer inside each control and behind its label. */
+:where([data-press]) { position: relative; }
+[data-press] {
+  isolation: isolate;
+  -webkit-tap-highlight-color: transparent;
+}
+[data-press]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity .2s ease-out;
+}
+[data-press="round"]::before { border-radius: 50%; }
+[data-press="squircle"]::before { border-radius: 28px; corner-shape: squircle; }
+[data-press]:not(:disabled):active {
+  scale: .96;
+}
+[data-press]:not(:disabled):active::before {
+  opacity: .2;
+}
+/* These controls have no resting fill. */
+.dialog-actions button[data-press],
+.record-pagination button[data-press],
+.corner-home[data-press],
+.number-pad button[data-press]:active { background: transparent; }
+.playing-page .play-tools #open-ending {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-press]::before { transition: none; }
+  [data-press]:not(:disabled):active { scale: 1; }
+}

@@ -25,7 +25,6 @@
   function render(records) {
     const list = el('records-list');
     list.replaceChildren();
-    el('rec-count').textContent = count + '명';
     el('records-page').textContent = `${page + 1} / ${Math.max(1, Math.ceil(count / size))}`;
     el('records-prev').disabled = page === 0;
     el('records-next').disabled = (page + 1) * size >= count;
@@ -89,8 +88,6 @@
   el('records-next').addEventListener('click', async () => { if ((page + 1) * size < count) { page++; await refresh(); } });
   el('board-retry').addEventListener('click', refresh);
   el('result-time').textContent = valid ? format(total) : '--:--';
-  el('completion-message').textContent = '탈출 성공! 닉네임을 입력해 기록을 남겨주세요.';
-  if (valid) el('penalty-note').textContent = '힌트 추가 시간: ' + format(run.penalty);
   if (typeof ResizeObserver !== 'undefined') {
     new ResizeObserver(() => {
       const list = el('records-list');

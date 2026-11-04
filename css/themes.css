@@ -1,12 +1,12 @@
 :root, :root[data-theme="doll"] {
   --primary-color: #d6b17a; --secondary-color: #f3e5ce; --background-color: #130e0c;
   --text-color: #f3e5ce; --muted: #c4b29c; --card: #2b201a; --glow: rgba(190,139,79,.22);
-  --panel-edge: #725338; --panel-radius: 8px;
+  --panel-edge: #725338; --panel-radius: 24px;
 }
 :root[data-theme="hideout"] {
   --primary-color: #82c9bb; --secondary-color: #e6ece9; --background-color: #0d1315;
   --text-color: #e6ece9; --muted: #acbcb9; --card: #1a2629; --glow: rgba(92,172,157,.18);
-  --panel-edge: #47605f; --panel-radius: 3px;
+  --panel-edge: #47605f; --panel-radius: 24px;
 }
 body { background: var(--background-color); color: var(--text-color); }
 .background-overlay { display: none; }

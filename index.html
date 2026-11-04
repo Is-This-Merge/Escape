@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./css/screen.css">
     <link rel="stylesheet" href="./css/artwork.css">
     <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/press.css">
 </head>
 <body class="home-page">
     <div class="background-overlay"></div>
@@ -24,29 +25,28 @@
         <a class="menu-button leaderboard-link" href="ending.html?view=leaderboard">순위표</a>
 
         <div class="footer">
-            <p>&copy; 2026 NULL. all rights reserved.</p>
+            <p>&copy; 2026 NULL & s0sCoD3. all rights reserved.</p>
         </div>
 
     </div>
 
     <nav class="home-tools" aria-label="홈 화면 도구">
-        <button type="button" id="open-artwork" class="home-tool" aria-haspopup="dialog" aria-label="포스터 보기" title="포스터 보기">
+        <button type="button" id="open-artwork" class="home-tool" aria-haspopup="dialog" aria-label="포스터 보기" title="포스터 보기" data-press="round">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 5-5 4 4 4-6 5 7"/></svg>
         </button>
-        <button type="button" id="theme-toggle" class="home-tool" aria-label="디자인 컨셉 전환" title="디자인 컨셉 전환">
+        <button type="button" id="theme-toggle" class="home-tool" aria-label="디자인 컨셉 전환" title="디자인 컨셉 전환" data-press="round">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16m-4-4 4 4-4 4M20 17H4m4-4-4 4 4 4"/></svg>
         </button>
     </nav>
-    <dialog id="artwork-dialog" aria-labelledby="artwork-title">
+    <dialog id="artwork-dialog" aria-label="컨셉 포스터">
         <header class="artwork-header">
-            <h2 id="artwork-title">포스터</h2>
-            <button type="button" id="close-artwork" autofocus>닫기</button>
+            <button type="button" id="close-artwork" aria-label="포스터 닫기" autofocus data-press="round"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
         </header>
         <div class="artwork-image"><img id="artwork-image" alt=""></div>
         <nav class="artwork-navigation" aria-label="포스터 탐색">
-            <button type="button" id="previous-artwork">이전</button>
+            <button type="button" id="previous-artwork" aria-label="이전 포스터" data-press="round"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></button>
             <span id="artwork-page" aria-live="polite"></span>
-            <button type="button" id="next-artwork">다음</button>
+            <button type="button" id="next-artwork" aria-label="다음 포스터" data-press="round"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m10 6 6 6-6 6"/></svg></button>
         </nav>
     </dialog>
     <script src="js/index.js"></script>
