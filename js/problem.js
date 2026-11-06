@@ -133,6 +133,7 @@ function renderHintStep() {
   const step = hintSteps[hintStep];
   hintText.replaceChildren();
   hintText.classList.remove('has-image');
+  hintDialog.classList.remove('has-image');
   if (typeof step === 'string') {
     hintText.textContent = step;
   } else {
@@ -147,6 +148,7 @@ function renderHintStep() {
       image.alt = step.alt || `${hintTitle.textContent} 이미지 힌트`;
       image.draggable = false;
       hintText.classList.add('has-image');
+      hintDialog.classList.add('has-image');
       hintText.append(image);
     }
   }

@@ -142,7 +142,7 @@ body.playing-page { display: grid; grid-template-rows: minmax(0, 1fr) auto; padd
 .ending-page .content:has(#record-form[hidden]) { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); max-width: 1100px; }
 @media (orientation: landscape) and (min-width: 900px) {
   .ending-page > .container { padding-top: 48px; }
-  .ending-page #title, .ending-page > .container > .concept-subtitle { width: calc(76% - 24px); text-align: center; }
+  .ending-page #title, .ending-page > .container > .concept-subtitle { width: 100%; text-align: center; }
 }
 @media (max-height: 650px) {
   .manual-steps p { font-size: 20px; line-height: 1.4; }
@@ -377,7 +377,10 @@ button:not(:disabled):active svg, .corner-home:active svg { transform: scale(.94
 .ending-page .record-pagination button { display: grid; place-items: center; width: 48px; height: 48px; min-height: 48px; padding: 0; border-radius: 50%; }
 .ending-page #records-page { min-width: 72px; text-align: center; font-variant-numeric: tabular-nums; }
 .board-feedback { display: flex; align-items: center; justify-content: center; gap: 16px; font-size: 20px; }
-.board-feedback:has(#board-status:empty) { display: none; }
+.board-feedback { height: 56px; min-height: 56px; }
+.board-feedback:has(#board-status:empty) { visibility: hidden; }
+.rec-stats { display: grid; gap: 6px; text-align: right; flex-shrink: 0; }
+.rec-hints { color: var(--muted); font-size: 18px; white-space: nowrap; }
 #board-retry { min-height: 48px; padding: 8px 16px; border: 0; background: transparent; color: var(--primary-color); font-size: 20px; cursor: pointer; }
 #record-dialog .input-card { gap: 16px; }
 @media (max-height: 650px) { #record-dialog .input-card { gap: 8px; padding: 20px; } }

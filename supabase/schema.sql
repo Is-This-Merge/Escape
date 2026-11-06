@@ -14,6 +14,7 @@ create table public.escape_records (
   concept text not null check (concept in ('doll', 'hideout')),
   nickname text not null check (char_length(btrim(nickname)) between 1 and 12 and nickname = btrim(nickname)),
   total_seconds integer not null check (total_seconds >= 0),
+  hint_count integer check (hint_count >= 0),
   penalty_seconds integer not null check (penalty_seconds between 0 and 3000 and penalty_seconds % (case when concept = 'hideout' then 60 else 600 end) = 0),
   created_at timestamptz not null default now(),
   staff_id uuid default auth.uid() references auth.users(id),
@@ -23,9 +24,9 @@ create index escape_records_ranking on public.escape_records (concept, total_sec
 alter table public.escape_records enable row level security;
 revoke all on public.escape_records from public, anon, authenticated;
 -- Staff identity is not part of the public leaderboard.
-grant select (id, concept, nickname, total_seconds, penalty_seconds, created_at)
+grant select (id, concept, nickname, total_seconds, penalty_seconds, hint_count, created_at)
   on public.escape_records to anon, authenticated;
-grant insert (id, concept, nickname, total_seconds, penalty_seconds)
+grant insert (id, concept, nickname, total_seconds, penalty_seconds, hint_count)
   on public.escape_records to anon, authenticated;
 create policy public_read_records on public.escape_records for select to anon, authenticated using (true);
 create policy public_insert_records on public.escape_records for insert to anon, authenticated

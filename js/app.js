@@ -37,7 +37,11 @@
       const nick = document.createElement('div'); nick.className = 'rec-nick'; nick.textContent = record.nickname;
       const date = document.createElement('div'); date.className = 'rec-date'; date.textContent = new Date(record.created_at).toLocaleString('ko-KR');
       const time = document.createElement('div'); time.className = 'rec-time'; time.textContent = format(record.total_seconds);
-      info.append(nick, date); card.append(rank, info, time); list.append(card);
+      const stats = document.createElement('div'); stats.className = 'rec-stats';
+      const hints = document.createElement('div'); hints.className = 'rec-hints';
+      hints.textContent = Number.isInteger(record.hint_count) ? `힌트 ${record.hint_count}회` : '힌트 미기록';
+      stats.append(time, hints);
+      info.append(nick, date); card.append(rank, info, stats); list.append(card);
     });
   }
   async function refresh() {
@@ -79,7 +83,8 @@
     if (!nickname || nickname.length > 12) { el('record-error').textContent = '닉네임을 1~12자로 입력하세요.'; return; }
     saving = true; sync(); el('record-error').textContent = '';
     try {
-      await EscapeRecords.save({ id: run.id, concept, nickname, total_seconds: total, penalty_seconds: run.penalty });
+      await EscapeRecords.save({ id: run.id, concept, nickname, total_seconds: total, penalty_seconds: run.penalty,
+        hint_count: Array.isArray(run.hints) ? new Set(run.hints).size : null });
       registered = true; page = 0; sync(); await refresh();
     } catch (error) { el('record-error').textContent = errorText(error); }
     finally { saving = false; sync(); }

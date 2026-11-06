@@ -29,9 +29,26 @@ function setup({ session = { user: { id: 'staff-id' } }, member = true, insertEr
     supabase: { createClient(...args) { calls.push(['client', ...args]); return api; } }
   } });
   vm.runInContext(fs.readFileSync('js/supabase.js', 'utf8'), context);
-  return { records: vm.runInContext('EscapeRecords', context), calls };
+  return { records: vm.runInContext('EscapeRecords', context), calls, context };
 }
 const record = { id: 'run-id', concept: 'doll', nickname: 'Player', total_seconds: 700, penalty_seconds: 600 };
+test('network requests abort after the timeout and release their timer', async () => {
+  const s = setup();
+  await s.records.list('doll', 0, 3);
+  let expire, cleared = false;
+  Object.assign(s.context, {
+    AbortController,
+    setTimeout(fn, delay) { assert.equal(delay, 15000); expire = fn; return 1; },
+    clearTimeout(id) { assert.equal(id, 1); cleared = true; },
+    fetch(url, options) {
+      return new Promise((resolve, reject) => options.signal.addEventListener('abort', () => reject(new Error('aborted'))));
+    }
+  });
+  const request = s.calls.find(c => c[0] === 'client')[3].global.fetch('/test');
+  expire();
+  await assert.rejects(request, /aborted/);
+  assert.equal(cleared, true);
+});
 test('unconfigured backend fails closed instead of falling back to local records', async () => {
   const s = setup({ config: { url: '', publishableKey: '' } });
   await assert.rejects(s.records.list('doll', 0, 3));

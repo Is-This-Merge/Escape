@@ -1,5 +1,5 @@
 const EscapeRecords = (() => {
-  const columns = 'id,concept,nickname,total_seconds,penalty_seconds,created_at';
+  const columns = 'id,concept,nickname,total_seconds,penalty_seconds,hint_count,created_at';
   let client;
   function getClient() {
     if (client) return client;
@@ -12,7 +12,13 @@ const EscapeRecords = (() => {
     }
     if (!window.supabase?.createClient) throw new Error('연결 모듈을 불러오지 못했습니다. 인터넷 연결을 확인해주세요.');
     client = window.supabase.createClient(config.url, config.publishableKey, {
-      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+      global: { fetch: async (url, options = {}) => {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 15000);
+        try { return await fetch(url, { ...options, signal: controller.signal }); }
+        finally { clearTimeout(timer); }
+      } }
     });
     return client;
   }

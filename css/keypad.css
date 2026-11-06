@@ -16,7 +16,9 @@ body.playing-page { padding: 22px 28px 72px; }
 .dial-copy { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 12px; }
 .playing-page .time { font-size: clamp(46px, 7vh, 76px); letter-spacing: .02em; }
 .hint-count { font-size: 20px; color: var(--muted); }
-#hint-dialog[open] { grid-template-rows: repeat(3, auto); }
+#hint-dialog { position: fixed; inset: auto; top: 50%; left: 50%; transform: translate(-50%, -50%); margin: 0; height: auto; }
+#hint-dialog[open] { grid-template-rows: repeat(3, max-content); }
+#hint-dialog.has-image { width: min(900px, calc(100vw - 48px)); max-width: calc(100vw - 48px); }
 #hint-dialog #hint-title { padding-right: 48px; }
 #hint-dialog #close-hint {
   position: absolute; top: 8px; right: 8px; display: grid; place-items: center;
@@ -25,7 +27,7 @@ body.playing-page { padding: 22px 28px 72px; }
 }
 #hint-dialog #hint-text { min-height: 0; margin: 0; touch-action: pan-y; }
 #hint-dialog #hint-text.has-image { min-height: 0; display: grid; gap: 12px; }
-#hint-text img { display: block; width: 100%; max-height: max(80px, calc(100dvh - 260px)); object-fit: contain; border-radius: 12px; }
+#hint-text img { display: block; justify-self: center; width: auto; height: auto; max-width: 100%; max-height: max(80px, calc(100dvh - 260px)); object-fit: contain; border-radius: 12px; }
 #hint-text p { margin: 0; }
 #ending-dialog { position: relative; padding: 56px 0 0; background: transparent; }
 #ending-password-form { padding: 24px; border-radius: var(--panel-radius); background: var(--card); }

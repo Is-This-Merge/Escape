@@ -16,7 +16,7 @@ function setup(concept, storage = new Map(), search = '?view=result') {
     location: { href: '', search }, setInterval: () => 1, clearInterval() {}, setTimeout() {} });
   // In-memory remote API fixture. Production never reads legacy local records.
   const read = concept => JSON.parse(storage.get('escape_records_' + concept) || '[]');
-  const remote = r => ({ id: r.id, concept: r.concept, nickname: r.nick, total_seconds: r.totalSec, penalty_seconds: r.penalty, created_at: new Date(r.ts).toISOString() });
+  const remote = r => ({ id: r.id, concept: r.concept, nickname: r.nick, total_seconds: r.totalSec, penalty_seconds: r.penalty, hint_count: r.hintCount, created_at: new Date(r.ts).toISOString() });
   context.EscapeRecords = {
     message: error => error.message,
     async find(id, concept) { const row = read(concept).find(r => r.id === id); return row ? remote(row) : null; },
@@ -27,7 +27,7 @@ function setup(concept, storage = new Map(), search = '?view=result') {
     async save(r) {
       const rows = read(r.concept);
       if (!rows.some(row => row.id === r.id)) {
-        rows.push({ id: r.id, concept: r.concept, nick: r.nickname, totalSec: r.total_seconds, penalty: r.penalty_seconds, ts: Date.now() });
+        rows.push({ id: r.id, concept: r.concept, nick: r.nickname, totalSec: r.total_seconds, penalty: r.penalty_seconds, hintCount: r.hint_count, ts: Date.now() });
         context.localStorage.setItem('escape_records_' + r.concept, JSON.stringify(rows));
       }
       return r;
@@ -79,6 +79,8 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(records.length, 1); assert.equal(records[0].nick, '<test>'); assert.ok(records[0].totalSec >= (concept === 'hideout' ? 245 : 665));
     assert.equal(end.el('save-record').disabled, true);
     assert.equal(end.el('records-list').children[0].children[1].children[0].textContent, '<test>');
+    assert.equal(records[0].hintCount, 5);
+    assert.equal(end.el('records-list').children[0].children[2].children[1].textContent, '힌트 5회');
     const otherBoard = setup(concept === 'doll' ? 'hideout' : 'doll', s.storage);
     otherBoard.file('app.js'); await otherBoard.run('EscapeLeaderboard.ready');
     assert.equal(otherBoard.el('records-list').children.length, 0);
