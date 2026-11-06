@@ -5,6 +5,7 @@ const puzzleSets = {
       "key": "353",
       "title": "맞춤 인형 주문서",
       "hints": [
+        "인형 B와 주문서를 대조해보세요.",
         "3152"
       ]
     },
@@ -25,71 +26,96 @@ const puzzleSets = {
         "상자를 잘 살펴보세요.",
         "눈의 모양을 잘 관찰하세요.",
         "눈을 잘 살펴보세요.",
-        "답"
+        "1109"
       ]
     },
     {
       "key": "415",
       "title": "저주인형 사용 방법",
       "hints": [
-        "사진들의 위치",
-        "답"
+        "'압사'는 제시문이 있는 책상에 깔려있습니다.",
+        "'못박기'는 입구 쪽 화이트보드에 있습니다.",
+        "'생매장'은 입구 쪽 높은 책상 위의 화분에 있습니다.",
+        "'난도질'은 입구 기준 오른편 파란 의자 위에 있습니다.",
+        "'익사'는 입구 기준 왼편 책상 위 물컵 속에 있습니다.",
+        "3697"
       ]
     },
     {
       "key": "769",
       "title": "탈출",
       "hints": [
-        "처음 받았던 목각인형을 이용하세요.",
+        "두 개의 목각인형을 이용하세요.",
         "목각인형의 숫자는 순서를 의미합니다.",
+        "칠판의 한자가 등장하는 순서를 이용하세요.",
         "답"
       ]
     }
   ],
   "hideout": [
     {
-      "key": "571",
-      "title": "은신처 입구",
+      "key": "376",
+      "title": "1번 문제",
       "hints": [
-        "매번 5가 더해집니다.",
-        "10 − 5와 15 − 10을 계산해 공통된 간격을 찾으세요.",
-        "마지막 기록 20에 공통 간격인 5를 더하세요."
+        "누른 횟수만큼 키패드의 알파벳을 고르세요. (2=A, 22=B, 222=C)",
+        "2/66/4/33/555로 끊어읽으세요.",
+        "1004"
       ]
     },
     {
-      "key": "142",
-      "title": "낡은 무전기",
+      "key": "883",
+      "title": "2번 문제",
       "hints": [
-        "낱말을 순서대로 숫자로 바꾸세요.",
-        "아홉은 9, 하나는 1입니다. 낱말의 순서를 바꾸지 마세요.",
-        "아홉 = 9, 하나 = 1, 일곱 = 7입니다. 세 숫자를 이어 쓰세요."
+        "필름을 두 장씩 겹쳐 보세요.",
+        "색칠된 칸이 아닌, 빈 칸을 보세요.",
+        "B+G, C+F, D+H, A+E 메모 순서대로 읽으세요.",
+        "5140"
       ]
     },
     {
-      "key": "713",
-      "title": "비밀 지도",
+      "key": "410",
+      "title": "3번 문제",
       "hints": [
-        "서쪽의 반대 방향입니다.",
-        "해가 뜨는 방향과 해가 지는 방향은 서로 반대입니다.",
-        "해는 동쪽에서 뜹니다. 방향 이름인 동쪽을 입력하세요."
+        "문제의 색을 보석 색끼리 섞어 만들어 보세요.",
+        { "image": "img/힌트1.png", "alt": "색 혼합 힌트. 주황은 빨강과 노랑, 보라는 빨강과 파랑, 초록은 파랑과 노랑, 검정은 빨강과 파랑과 노랑의 조합입니다." },
+        "5679"
       ]
     },
     {
-      "key": "285",
-      "title": "보급 창고",
+      "key": "515",
+      "title": "4번 문제",
       "hints": [
-        "4 곱하기 3을 계산하세요.",
-        "상자 하나에 3개씩 있으므로 3을 상자 수만큼 더하세요.",
-        "상자는 4개입니다. 3 + 3 + 3 + 3을 계산하세요."
+        "키패드의 모양과 비교해보세요.",
+        { "image": "img/힌트2.png", "alt": "도형 힌트. 아래쪽과 오른쪽 선은 1, 위쪽과 왼쪽 선은 9, 위쪽과 오른쪽과 아래쪽 선은 4입니다." },
+        "7256"
       ]
     },
     {
-      "key": "856",
-      "title": "비상 출구",
+      "key": "219",
+      "title": "5번 문제",
       "hints": [
-        "8, 6 다음의 두 숫자를 이어 적으세요.",
-        "첫 숫자는 8입니다. 바로 다음 숫자는 8 − 2인 6입니다.",
-        "6에서 2를 빼면 4, 다시 2를 빼면 2입니다. 8부터 네 숫자를 이어 쓰세요."
+        "달력에 UV를 비춰보세요.",
+        "달력 아래 알파벳을 이어 읽으세요.",
+        "달마다 표시된 날짜를 더해 아스키 코드로 읽으세요.",
+        "fivethreenine = 539"
+      ]
+    },
+    {
+      "key": "017",
+      "title": "6번 문제",
+      "hints": [
+        "왼쪽 위 M을 (1,1)로 보고, (가로, 세로)로 읽으세요.",
+        "Where Sherlock lives",
+        "221"
+      ]
+    },
+    {
+      "key": "629",
+      "title": "7번 문제",
+      "hints": [
+        "신분증 뒷면을 보세요.",
+        "네 장을 2x2로 이어 붙이세요.",
+        "7002"
       ]
     }
   ]
@@ -103,7 +129,27 @@ const keyError = document.getElementById('key-error');
 let hintSteps = [];
 let hintStep = 0;
 function renderHintStep() {
-  hintText.textContent = hintSteps[hintStep];
+  // A step can be text or an object with image, alt and optional text.
+  const step = hintSteps[hintStep];
+  hintText.replaceChildren();
+  hintText.classList.remove('has-image');
+  if (typeof step === 'string') {
+    hintText.textContent = step;
+  } else {
+    if (step.text) {
+      const caption = document.createElement('p');
+      caption.textContent = step.text;
+      hintText.append(caption);
+    }
+    if (step.image) {
+      const image = document.createElement('img');
+      image.src = step.image;
+      image.alt = step.alt || `${hintTitle.textContent} 이미지 힌트`;
+      image.draggable = false;
+      hintText.classList.add('has-image');
+      hintText.append(image);
+    }
+  }
   document.getElementById('hint-page').textContent = `${hintStep + 1} / ${hintSteps.length}`;
   document.getElementById('previous-hint').disabled = hintStep === 0;
   document.getElementById('next-hint').disabled = hintStep === hintSteps.length - 1;
@@ -161,7 +207,7 @@ document.getElementById('key-form').addEventListener('submit', event => {
   const firstView = !EscapeGame.run.hints.includes(index);
   if (firstView) {
     EscapeGame.run.hints.push(index);
-    EscapeGame.run.penalty += 600;
+    EscapeGame.run.penalty += currentConcept === 'hideout' ? 300 : 600;
     EscapeGame.save();
     EscapeGame.update();
     updateHintCount();

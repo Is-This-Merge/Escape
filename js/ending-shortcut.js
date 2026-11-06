@@ -1,5 +1,5 @@
 // 현장 진행용 비밀번호입니다. 정적 웹이므로 서버 인증을 대신하지 않습니다.
-const ENDING_PASSWORD = '1234';
+const ENDING_PASSWORD = EscapeGame.run.concept === 'hideout' ? '7002' : '1234';
 const endingDialog = document.getElementById('ending-dialog');
 const endingPassword = document.getElementById('ending-password');
 const endingError = document.getElementById('ending-error');

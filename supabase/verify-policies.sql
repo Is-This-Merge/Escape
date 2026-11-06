@@ -43,7 +43,7 @@ select set_config('request.jwt.claims', json_build_object('sub', current_setting
 set local role authenticated;
 -- This account is deliberately not a member of escape_staff.
 insert into public.escape_records (id, concept, nickname, total_seconds, penalty_seconds)
-  values (gen_random_uuid(), 'hideout', 'member', 700, 600);
+  values (gen_random_uuid(), 'hideout', 'member', 700, 300);
 do $$ begin
   begin
     update public.escape_records set nickname = 'changed' where id = current_setting('escape.test_record')::uuid;

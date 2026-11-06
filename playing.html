@@ -68,7 +68,7 @@
 <dialog id="hint-dialog" aria-labelledby="hint-title" aria-describedby="hint-text">
     <button type="button" id="close-hint" aria-label="힌트 닫기" autofocus data-press="round"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
     <h2 id="hint-title">힌트</h2>
-    <p id="hint-text" aria-live="polite"></p>
+    <div id="hint-text" aria-live="polite"></div>
     <nav class="hint-navigation" aria-label="힌트 단계">
         <button type="button" id="previous-hint" aria-label="이전 힌트" data-press="squircle">← 이전</button>
         <span id="hint-page" aria-live="polite">1 / 3</span>
@@ -80,13 +80,13 @@
     <iframe id="guide-frame" title="사이트 및 자물쇠 이용 방법" src="guide.html?embed=1"></iframe>
 </dialog>
 <dialog id="ending-dialog" aria-label="탈출 비밀번호 입력">
+    <button type="button" id="cancel-ending" aria-label="닫기" data-press="round"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
     <form id="ending-password-form">
+        <div class="ending-password-row">
         <input id="ending-password" type="text" inputmode="numeric" placeholder="탈출 비밀번호" aria-label="비밀번호" autocomplete="off" spellcheck="false" required>
-        <p id="ending-error" role="status"></p>
-        <div class="dialog-actions">
-            <button type="button" id="cancel-ending" data-press="squircle">취소</button>
-            <button type="submit" data-press="squircle">확인</button>
+        <button type="submit" aria-label="비밀번호 제출" data-press="round"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
         </div>
+        <p id="ending-error" role="status"></p>
     </form>
 </dialog>
 
