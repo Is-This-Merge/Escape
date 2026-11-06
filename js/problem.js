@@ -184,7 +184,7 @@ hintText.addEventListener('touchend', event => {
 }, { passive: true });
 hintText.addEventListener('touchcancel', () => { touchStart = null; });
 function updateHintCount() {
-  document.getElementById('hint-count').textContent = `${EscapeGame.run.hints.length} / ${problems.length}`;
+  document.getElementById('hint-count').textContent = `힌트 사용: ${EscapeGame.run.hints.length}회`;
 }
 updateHintCount();
 document.getElementById('close-hint').addEventListener('click', () => hintDialog.close());

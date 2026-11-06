@@ -80,7 +80,7 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(end.el('save-record').disabled, true);
     assert.equal(end.el('records-list').children[0].children[1].children[0].textContent, '<test>');
     assert.equal(records[0].hintCount, 5);
-    assert.equal(end.el('records-list').children[0].children[2].children[1].textContent, '힌트 5회');
+    assert.equal(end.el('records-list').children[0].children[2].children[1].textContent, '5회');
     const otherBoard = setup(concept === 'doll' ? 'hideout' : 'doll', s.storage);
     otherBoard.file('app.js'); await otherBoard.run('EscapeLeaderboard.ready');
     assert.equal(otherBoard.el('records-list').children.length, 0);
@@ -104,6 +104,17 @@ test('image hint pages render in order and returning to text clears the image wi
   s.el('previous-hint').handlers.click();
   assert.equal(s.el('hint-text').children[0].src, 'img/힌트2.png');
   assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 180 : 420);
+});
+
+test('unused hints display and save as zero', async () => {
+  const s = setup('doll'); s.file('time.js'); s.file('problem.js');
+  assert.equal(s.el('hint-count').textContent, '힌트 사용: 0회');
+  s.run('EscapeGame.run.solved = 5; EscapeGame.finish()');
+  s.file('app.js'); await s.run('EscapeLeaderboard.ready');
+  s.el('inp-nick').value = 'zero';
+  await s.el('record-form').handlers.submit({ preventDefault() {} });
+  assert.equal(JSON.parse(s.storage.get('escape_records_doll'))[0].hintCount, 0);
+  assert.equal(s.el('records-list').children[0].children[2].children[1].textContent, '0회');
 });
 
 test('direct ending visit cannot submit a completion', async () => {

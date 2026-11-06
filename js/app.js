@@ -39,7 +39,8 @@
       const time = document.createElement('div'); time.className = 'rec-time'; time.textContent = format(record.total_seconds);
       const stats = document.createElement('div'); stats.className = 'rec-stats';
       const hints = document.createElement('div'); hints.className = 'rec-hints';
-      hints.textContent = Number.isInteger(record.hint_count) ? `힌트 ${record.hint_count}회` : '힌트 미기록';
+      hints.textContent = Number.isInteger(record.hint_count) ? `${record.hint_count}회` : record.penalty_seconds === 0 ? '0회' : '힌트 미기록';
+      hints.setAttribute('aria-label', `힌트 사용: ${hints.textContent}`);
       stats.append(time, hints);
       info.append(nick, date); card.append(rank, info, stats); list.append(card);
     });
