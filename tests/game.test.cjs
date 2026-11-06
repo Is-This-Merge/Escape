@@ -52,20 +52,20 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(s.el('hint-text').textContent, s.run('problems[4].hints[0]'));
     assert.equal(s.el('hint-dialog').open, true);
     assert.equal(s.el('key-error').textContent, '');
-    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 300 : 600);
+    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 180 : 600);
     s.el('close-hint').handlers.click();
     assert.equal(s.el('hint-dialog').open, false);
     s.submit(lastKey);
     assert.equal(s.el('hint-dialog').open, true);
-    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 300 : 600);
+    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 180 : 600);
     const stored = JSON.parse(s.storage.get('escape_run_' + concept));
     stored.startedAt -= 65000; s.storage.set('escape_run_' + concept, JSON.stringify(stored));
     s = setup(concept, s.storage); s.file('time.js'); s.file('problem.js');
     s.submit(lastKey);
-    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 300 : 600);
-    assert.ok(s.run('EscapeGame.elapsed()') >= (concept === 'hideout' ? 365 : 665));
+    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 180 : 600);
+    assert.ok(s.run('EscapeGame.elapsed()') >= (concept === 'hideout' ? 245 : 665));
     for (let i = 0; i < 4; i++) s.submit(s.run('problems[' + i + '].key'));
-    assert.equal(s.run('EscapeGame.run.penalty'), concept === 'hideout' ? 1500 : 3000);
+    assert.equal(s.run('EscapeGame.run.penalty'), concept === 'hideout' ? 900 : 3000);
     assert.equal(s.context.location.href, '');
     s.file('ending-shortcut.js');
     s.el('ending-password').value = s.context.EscapeTheme.current === 'hideout' ? '7002' : '1234';
@@ -76,7 +76,7 @@ for (const concept of ['doll', 'hideout']) {
     await end.el('record-form').handlers.submit({ preventDefault() {} });
     await end.el('record-form').handlers.submit({ preventDefault() {} });
     const records = JSON.parse(end.storage.get('escape_records_' + concept));
-    assert.equal(records.length, 1); assert.equal(records[0].nick, '<test>'); assert.ok(records[0].totalSec >= (concept === 'hideout' ? 365 : 665));
+    assert.equal(records.length, 1); assert.equal(records[0].nick, '<test>'); assert.ok(records[0].totalSec >= (concept === 'hideout' ? 245 : 665));
     assert.equal(end.el('save-record').disabled, true);
     assert.equal(end.el('records-list').children[0].children[1].children[0].textContent, '<test>');
     const otherBoard = setup(concept === 'doll' ? 'hideout' : 'doll', s.storage);
@@ -101,7 +101,7 @@ test('image hint pages render in order and returning to text clears the image wi
   assert.equal(s.el('next-hint').disabled, true);
   s.el('previous-hint').handlers.click();
   assert.equal(s.el('hint-text').children[0].src, 'img/힌트2.png');
-  assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 300 : 600);
+  assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 180 : 600);
 });
 
 test('direct ending visit cannot submit a completion', async () => {
@@ -161,7 +161,7 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(s.el('code-slot-2').textContent, '1');
     s.el('key-form').handlers.submit({ preventDefault() {} });
     assert.equal(s.el('hint-dialog').open, true);
-    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 300 : 600);
+    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 180 : 600);
     s.el('code-backspace').handlers.click();
     assert.equal(s.el('code-slot-2').textContent, '');
     s.el('problem-key').value = 'h002';
@@ -297,14 +297,14 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(s.el('hint-page').textContent, '3 / 3');
     s.el('hint-dialog').handlers.keydown({ key: 'ArrowLeft', preventDefault() {} });
     assert.equal(s.el('hint-page').textContent, '2 / 3');
-    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 300 : 600);
+    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 180 : 600);
     s.submit(s.run('problems[0].key'));
     assert.equal(s.el('hint-page').textContent, '1 / 3');
-    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 300 : 600);
+    assert.equal(s.run('EscapeGame.run.penalty'), s.context.EscapeTheme.current === 'hideout' ? 180 : 600);
     s.submit(s.run('problems[1].key'));
     assert.equal(s.el('hint-page').textContent, '1 / 3');
     assert.equal(s.el('hint-text').textContent, s.run('problems[1].hints[0]'));
-    assert.equal(s.run('EscapeGame.run.penalty'), concept === 'hideout' ? 600 : 1200);
+    assert.equal(s.run('EscapeGame.run.penalty'), concept === 'hideout' ? 360 : 1200);
   });
 }
 
@@ -373,4 +373,5 @@ test('public board read failure shows retry and never pretends the board is empt
   assert.equal(s.el('board-status').textContent, '');
   assert.equal(s.el('board-retry').hidden, true);
 });
+
 

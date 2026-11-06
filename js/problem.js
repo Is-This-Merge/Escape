@@ -1,4 +1,4 @@
-﻿// Each puzzle owns its hints, ordered from general to specific.
+// Each puzzle owns its hints, ordered from general to specific.
 const puzzleSets = {
   "doll": [
     {
@@ -207,7 +207,7 @@ document.getElementById('key-form').addEventListener('submit', event => {
   const firstView = !EscapeGame.run.hints.includes(index);
   if (firstView) {
     EscapeGame.run.hints.push(index);
-    EscapeGame.run.penalty += currentConcept === 'hideout' ? 300 : 600;
+    EscapeGame.run.penalty += currentConcept === 'hideout' ? 180 : 600;
     EscapeGame.save();
     EscapeGame.update();
     updateHintCount();
@@ -218,3 +218,4 @@ document.getElementById('key-form').addEventListener('submit', event => {
   renderHintStep();
   if (!hintDialog.open) hintDialog.showModal();
 });
+

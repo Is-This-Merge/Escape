@@ -36,7 +36,7 @@ body.playing-page { padding: 22px 28px 72px; }
 #ending-error { margin: 0; }
 #ending-error:empty { display: none; }
 .hint-navigation { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.hint-navigation button { min-height: 48px; padding: 8px 12px; border: 0; background: transparent; color: var(--text-color); font-size: 22px; }
+.hint-navigation button { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--text-color); }
 #hint-page { flex-shrink: 0; font-size: 20px; color: var(--muted); }
 @media (max-height: 650px) {
   #hint-dialog[open] { gap: 12px; padding: 20px; }

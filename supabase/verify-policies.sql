@@ -1,4 +1,4 @@
-﻿-- Run after schema.sql OR allow-public-registration.sql. Tests are rolled back.
+-- Run after schema.sql OR allow-public-registration.sql. Tests are rolled back.
 begin;
 select set_config('escape.test_user', gen_random_uuid()::text, true);
 select set_config('escape.test_record', gen_random_uuid()::text, true);
@@ -43,7 +43,7 @@ select set_config('request.jwt.claims', json_build_object('sub', current_setting
 set local role authenticated;
 -- This account is deliberately not a member of escape_staff.
 insert into public.escape_records (id, concept, nickname, total_seconds, penalty_seconds)
-  values (gen_random_uuid(), 'hideout', 'member', 700, 300);
+  values (gen_random_uuid(), 'hideout', 'member', 700, 180);
 do $$ begin
   begin
     update public.escape_records set nickname = 'changed' where id = current_setting('escape.test_record')::uuid;
@@ -60,3 +60,4 @@ do $$ begin
 end $$;
 reset role;
 rollback;
+

@@ -14,7 +14,7 @@ create table public.escape_records (
   concept text not null check (concept in ('doll', 'hideout')),
   nickname text not null check (char_length(btrim(nickname)) between 1 and 12 and nickname = btrim(nickname)),
   total_seconds integer not null check (total_seconds >= 0),
-  penalty_seconds integer not null check (penalty_seconds between 0 and 3000 and penalty_seconds % (case when concept = 'hideout' then 300 else 600 end) = 0),
+  penalty_seconds integer not null check (penalty_seconds between 0 and 3000 and penalty_seconds % (case when concept = 'hideout' then 60 else 600 end) = 0),
   created_at timestamptz not null default now(),
   staff_id uuid default auth.uid() references auth.users(id),
   check (total_seconds >= penalty_seconds)
@@ -32,3 +32,4 @@ create policy public_insert_records on public.escape_records for insert to anon,
   with check (staff_id is not distinct from (select auth.uid()));
 -- No UPDATE / DELETE grants or policies; manage records in the dashboard.
 commit;
+
