@@ -68,7 +68,7 @@ for (const concept of ['doll', 'hideout']) {
     assert.equal(s.run('EscapeGame.run.penalty'), concept === 'hideout' ? 900 : 3000);
     assert.equal(s.context.location.href, '');
     s.file('ending-shortcut.js');
-    s.el('ending-password').value = s.context.EscapeTheme.current === 'hideout' ? '7002' : '1234';
+    s.el('ending-password').value = s.context.EscapeTheme.current === 'hideout' ? '7002' : '0486';
     s.el('ending-password-form').handlers.submit({ preventDefault() {} });
     assert.equal(s.context.location.href, 'ending.html?view=result');
     const end = setup(concept, s.storage); end.file('app.js'); await end.run('EscapeLeaderboard.ready');
@@ -223,7 +223,7 @@ test('ending shortcut requires password and cancellation keeps the game running'
   assert.equal(s.el('ending-dialog').open, false);
   s.el('open-ending').handlers.click();
   assert.equal(s.el('ending-password').value, '');
-  s.el('ending-password').value = s.context.EscapeTheme.current === 'hideout' ? '7002' : '1234';
+  s.el('ending-password').value = s.context.EscapeTheme.current === 'hideout' ? '7002' : '0486';
   s.el('ending-password-form').handlers.submit({ preventDefault() {} });
   assert.equal(s.context.location.href, 'ending.html?view=result');
   assert.equal(s.run('EscapeGame.run.solved'), 5);
