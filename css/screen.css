@@ -14,7 +14,7 @@ button, input, select, .btn-add, .hint-btn { min-height: 48px; }
 /* Home: reserve footer space rather than adding it to the viewport height. */
 .home-page .container { height: calc(100% - var(--footer-space)); min-height: 0; padding: 24px 80px; gap: var(--screen-gap); }
 .home-page #title { font-size: clamp(44px, min(9vw, 12vh), 104px); line-height: 1.1; margin: 0; }
-.home-page .concept-subtitle { margin-bottom: min(3vh, 28px); }
+.home-page .concept-subtitle { margin-bottom: min(3vh, 28px); font-size: clamp(28px, 3.5vw, 38px); font-weight: 700; }
 .home-page .menu-button { width: min(440px, 100%); min-height: 56px; height: clamp(56px, 9vh, 84px); padding: 10px 20px; font-size: 26px; flex-shrink: 0; margin: 0; }
 
 /* Guide: a two-by-two overview fits both landscape and portrait tablets. */

@@ -1,3 +1,23 @@
+// Keep brief tablet taps visible, then fade out without expanding the background.
+document.querySelectorAll('.number-pad button').forEach(button => {
+  let releaseTimer;
+  const clearPress = () => {
+    clearTimeout(releaseTimer);
+    button.classList.remove('is-pressed');
+  };
+  button.addEventListener('pointerdown', () => {
+    if (button.disabled) return;
+    clearTimeout(releaseTimer);
+    button.classList.add('is-pressed');
+  });
+  button.addEventListener('pointerup', () => {
+    releaseTimer = setTimeout(clearPress, 120);
+  });
+  button.addEventListener('pointercancel', clearPress);
+  button.addEventListener('pointerleave', clearPress);
+  button.addEventListener('blur', clearPress);
+});
+
 function renderCode() {
   for (let i = 0; i < 3; i++) {
     document.getElementById('code-slot-' + i).textContent = keyInput.value[i] || '';

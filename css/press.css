@@ -16,11 +16,14 @@
 }
 [data-press="round"]::before { border-radius: 50%; }
 [data-press="squircle"]::before { border-radius: 28px; corner-shape: squircle; }
-[data-press]:not(:disabled):active {
+[data-press]:not(:disabled):active,
+[data-press].is-pressed:not(:disabled) {
   scale: .96;
 }
-[data-press]:not(:disabled):active::before {
+[data-press]:not(:disabled):active::before,
+[data-press].is-pressed:not(:disabled)::before {
   opacity: .2;
+  transition-duration: .06s;
 }
 /* These controls have no resting fill. */
 .dialog-actions button[data-press],
@@ -34,5 +37,5 @@
 }
 @media (prefers-reduced-motion: reduce) {
   [data-press]::before { transition: none; }
-  [data-press]:not(:disabled):active { scale: 1; }
+  [data-press]:not(:disabled):active, [data-press].is-pressed:not(:disabled) { scale: 1; }
 }
