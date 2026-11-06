@@ -209,7 +209,7 @@ document.getElementById('key-form').addEventListener('submit', event => {
   const firstView = !EscapeGame.run.hints.includes(index);
   if (firstView) {
     EscapeGame.run.hints.push(index);
-    EscapeGame.run.penalty += currentConcept === 'hideout' ? 180 : 600;
+    EscapeGame.run.penalty += currentConcept === 'hideout' ? 180 : 420;
     EscapeGame.save();
     EscapeGame.update();
     updateHintCount();

@@ -15,7 +15,7 @@ create table public.escape_records (
   nickname text not null check (char_length(btrim(nickname)) between 1 and 12 and nickname = btrim(nickname)),
   total_seconds integer not null check (total_seconds >= 0),
   hint_count integer check (hint_count >= 0),
-  penalty_seconds integer not null check (penalty_seconds between 0 and 3000 and penalty_seconds % (case when concept = 'hideout' then 60 else 600 end) = 0),
+  penalty_seconds integer not null check (penalty_seconds between 0 and 3000 and penalty_seconds % 60 = 0),
   created_at timestamptz not null default now(),
   staff_id uuid default auth.uid() references auth.users(id),
   check (total_seconds >= penalty_seconds)

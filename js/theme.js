@@ -9,7 +9,7 @@ const EscapeTheme = (() => {
     document.title = concepts[current].title + ': ' + concepts[current].subtitle;
     document.querySelectorAll('[data-concept-title]').forEach(el => el.textContent = concepts[current].title);
     document.querySelectorAll('[data-concept-subtitle]').forEach(el => el.textContent = concepts[current].subtitle);
-    document.querySelectorAll('[data-hint-minutes]').forEach(el => el.textContent = current === 'hideout' ? '3' : '10');
+    document.querySelectorAll('[data-hint-minutes]').forEach(el => el.textContent = current === 'hideout' ? '3' : '7');
     const toggle = document.getElementById('theme-toggle');
     if (toggle) {
       const label = (current === 'doll' ? '옛 은신처' : '저주받은 인형') + ' 컨셉으로 전환';
