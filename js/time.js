@@ -8,7 +8,7 @@ const EscapeGame = (() => {
   const save = () => localStorage.setItem(key, JSON.stringify(run));
   const elapsed = () => Math.max(0, Math.floor(((run.finishedAt ?? Date.now()) - run.startedAt) / 1000)) + run.penalty;
   const format = seconds => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
-  const gaugeDuration = 100 * 60;
+  const gaugeDuration = (run.concept === 'doll' ? 40 : 100) * 60;
   function update() {
     const seconds = elapsed();
     document.getElementById('timer').textContent = format(seconds);

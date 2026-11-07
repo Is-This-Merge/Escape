@@ -122,7 +122,7 @@ test('direct ending visit cannot submit a completion', async () => {
   await s.el('record-form').handlers.submit({ preventDefault() {} }); assert.equal(s.storage.size, 0);
 });
 test('100-minute gauge fills, includes hint penalties, and caps at full', async () => {
-  const s = setup('doll'); s.file('time.js');
+  const s = setup('hideout'); s.file('time.js');
   s.run('EscapeGame.run.startedAt = 1000; EscapeGame.run.finishedAt = 1000; EscapeGame.update()');
   assert.equal(s.el('timer-progress')['stroke-dashoffset'], '100');
   assert.equal(s.el('timer-progress').opacity, '0');
@@ -137,6 +137,15 @@ test('100-minute gauge fills, includes hint penalties, and caps at full', async 
   s.run('EscapeGame.run.finishedAt = 6001000; EscapeGame.update()');
   assert.equal(s.el('timer-progress')['stroke-dashoffset'], '0');
 });
+test('doll gauge fills at 40 minutes including penalties', () => {
+  const s = setup('doll'); s.file('time.js');
+  s.run('EscapeGame.run.startedAt = 1000; EscapeGame.run.finishedAt = 1201000; EscapeGame.update()');
+  assert.equal(s.el('timer-progress')['stroke-dashoffset'], '50');
+  s.run('EscapeGame.run.finishedAt = 1981000; EscapeGame.run.penalty = 420; EscapeGame.update()');
+  assert.equal(s.el('timer-progress')['stroke-dashoffset'], '0');
+  assert.equal(s.el('timer').textContent, '40:00');
+});
+
 test('same numeric key returns only the active concept hint', async () => {
   const doll = setup('doll'); doll.file('time.js'); doll.file('problem.js');
   const hideout = setup('hideout'); hideout.file('time.js'); hideout.file('problem.js');
